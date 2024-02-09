@@ -1,0 +1,51 @@
+:root {
+  --colors-main: rgb(144, 202, 249);
+
+  --colors-background_0: rgb(28, 33, 36);
+  --colors-background_1: rgb(34, 41, 47);
+  --colors-background_2: rgb(35, 43, 50);
+  --colors-background_3: rgb(37, 46, 53);
+  --colors-background_4: rgb(38, 48, 55);
+  --colors-background_5: rgb(40, 50, 58);
+  --colors-background_6: rgb(41, 52, 60);
+  --colors-background_7: rgb(42, 53, 62);
+  --colors-background_8: rgb(43, 55, 64);
+  --colors-background_9: rgb(44, 56, 66);
+  --colors-background_10: rgb(45, 58, 68);
+  --colors-background_11: rgb(46, 59, 69);
+  --colors-background_12: rgb(47, 60, 71);
+  --colors-background_13: rgb(47, 61, 72);
+  --colors-background_14: rgb(48, 62, 73);
+  --colors-background_15: rgb(48, 62, 73);
+  --colors-background_16: rgb(49, 63, 74);
+
+  --text-background-high: rgba(255, 255, 255, 0.83);
+  --text-background-medium: rgba(255, 255, 255, 0.6);
+  --text-background-disabled: rgba(255, 255, 255, 0.38);
+  --text-background-hover: rgba(255, 255, 255, 0.04);
+
+  --realms-client: #f39c12;
+  --realms-server: #3498db;
+
+  --arguments-background: rgb(144, 202, 249);
+  --arguments-color: var(--colors-background_2);
+
+  --sideMenu-background: var(--colors-background_8);
+  --sideMenu-active: rgba(255, 255, 255, 0.12);
+  --sideMenu-text: rgba(255, 255, 255, 0.83);
+  --sideMenu-hover: rgba(255, 255, 255, 0.04);
+  --sideMenu-divider: rgba(255, 255, 255, 0.3);
+
+  --codeBlocks-background: var(--colors-background_6);
+  --codeBlocks-color: rgba(255, 255, 255, 0.83);
+  --codeBlocks-comment: #95a5a6;
+  --codeBlocks-punctuation: #95a5a6;
+  --codeBlocks-number: #f39c12;
+  --codeBlocks-string: #1abc9c;
+  --codeBlocks-operator: #e74c3c;
+  --codeBlocks-keyword: #9b59b6;
+  --codeBlocks-function: #9b59b;
+
+  --table-background: var(--colors-background_16);
+  --table-alternative: var(--colors-background_8);
+}
