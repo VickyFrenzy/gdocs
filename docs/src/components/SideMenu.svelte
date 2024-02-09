@@ -25,7 +25,6 @@
     if (d) {
       project = d.structure;
       tabs = Object.entries(project);
-      console.log(d.structure);
       loaded = true;
     }
   });
@@ -40,7 +39,6 @@
     menuOpen = window.innerWidth > 1000;
 
     urlTab = $location.split("/")[1] ?? "";
-    console.log(urlTab);
   });
 
   onDestroy(() => {
@@ -54,7 +52,7 @@
       {#if value.subcategories && Object.values(value.subcategories).length !== 0}
         <button
           class="tab"
-          class:active={menuOpen}
+          class:active={menuOpen && activeTab === key}
           on:click={() => {
             if (activeTab === key) {
               menuOpen = !menuOpen;
@@ -96,8 +94,26 @@
                   d="M16,7V3H14V7H10V3H8V7H8C7,7 6,8 6,9V14.5L9.5,18V21H14.5V18L18,14.5V9C18,8 17,7 16,7Z"
                   style="fill: currentcolor;"
                 ></path>
+              {:else if key === "panels"}
+                <path
+                  fill="currentColor"
+                  d="M10 5v6h11V5m-5 13h5v-6h-5M4 18h5V5H4m6 13h5v-6h-5z"
+                />
+              {:else if key === "enums"}
+                <path
+                  fill="currentColor"
+                  d="M7 13v-2h14v2zm0 6v-2h14v2zM7 7V5h14v2zM3 8V5H2V4h2v4zm-1 9v-1h3v4H2v-1h2v-.5H3v-1h1V17zm2.25-7a.75.75 0 0 1 .75.75c0 .2-.08.39-.21.52L3.12 13H5v1H2v-.92L4 11H2v-1z"
+                />
+              {:else if key === "structs"}
+                <path
+                  fill="currentColor"
+                  d="M12 3C7.58 3 4 4.79 4 7s3.58 4 8 4s8-1.79 8-4s-3.58-4-8-4M4 9v3c0 2.21 3.58 4 8 4s8-1.79 8-4V9c0 2.21-3.58 4-8 4s-8-1.79-8-4m0 5v3c0 2.21 3.58 4 8 4s8-1.79 8-4v-3c0 2.21-3.58 4-8 4s-8-1.79-8-4"
+                />
               {:else}
-                <text>{key}</text>
+                <path
+                  fill="currentColor"
+                  d="M13.64 21.97a.99.99 0 0 1-1.33-.47l-2.18-4.74l-2.51 2.02c-.17.14-.38.22-.62.22a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1c.24 0 .47.09.64.23l.01-.01l11.49 9.64a1.001 1.001 0 0 1-.44 1.75l-3.16.62l2.2 4.73c.26.5.02 1.09-.48 1.32z"
+                />
               {/if}
             </svg>
             <span>{value.name}</span>
@@ -124,11 +140,13 @@
               count={content.length}
             >
               {#each content as item}
+                {@const href = `/${activeTab}/${subcategory.name}/${item.name}`}
                 <a
                   use:link
-                  href="/{activeTab}/{subcategory.name}/{item.name}"
+                  {href}
                   class="subcategory"
                   on:click={closeMenu}
+                  class:active={$location === href}
                 >
                   <div class="sub-container">
                     <span>{clear_label(item.name)}</span>
@@ -182,6 +200,10 @@
     color: inherit;
     font-family: inherit;
     font-size: inherit;
+  }
+
+  .tab.active {
+    background-color: var(--sideMenu-active);
   }
 
   .tab div:hover {

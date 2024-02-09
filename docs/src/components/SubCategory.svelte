@@ -1,7 +1,6 @@
 <script lang="ts">
   import { location, link } from "svelte-spa-router";
 
-  export let key: string;
   export let href: string;
   export let label: string;
   export let count: number;

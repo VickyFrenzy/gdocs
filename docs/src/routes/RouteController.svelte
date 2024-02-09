@@ -1,6 +1,12 @@
 <script lang="ts">
-  import { getContext, onMount } from "svelte";
+  import { getContext, onDestroy, onMount } from "svelte";
   import NotFound from "./NotFound.svelte";
+  import type { ProjectStructure } from "../utils/parsed";
+  import { parsedData } from "../stores";
+  import Function from "../views/Function.svelte";
+  import { location } from "svelte-spa-router";
+  import Category from "../views/Category.svelte";
+  import Table from "../views/Table.svelte";
 
   export let params: {
     tab: string;
@@ -8,15 +14,15 @@
     subcategory: string;
   };
 
-  const { getData } = getContext<any>("parsed");
-
   let loaded = false;
+
   let category_object;
   let exists: boolean = false;
   let item: any;
 
-  onMount(() => {
-    const project = getData().structure;
+  let project: ProjectStructure = {};
+
+  const refreshData = () => {
     category_object = project[params.tab]?.subcategories?.[params.category];
 
     exists =
@@ -31,35 +37,44 @@
           ? category_object.subcategories[params.subcategory]
           : category_object;
     }
+  };
 
-    console.log(category_object);
+  $: if (params) {
+    refreshData();
+  }
+
+  const unSub = parsedData.subscribe((d) => {
+    if (d) {
+      project = d.structure;
+      refreshData();
+
+      loaded = true;
+    }
+  });
+
+  onDestroy(() => {
+    unSub();
   });
 </script>
 
-<h1>Route controller</h1>
-<p>{params.tab} / {params.category} / {params.subcategory}</p>
+<!-- <p>{params.tab} / {params.category} / {params.subcategory}</p> -->
 
-{#if loaded}
-  {#if exists}
-    {#if item.item.startsWith("category")}
-      <p>Category</p>
-    {:else if item.item.endsWith("table")}
-      <p>Page</p>
+{#key $location}
+  {#if loaded}
+    {#if exists}
+      {#key item}
+        {#if item.item.startsWith("category")}
+          <Category {item} category={params.category} />
+        {:else if item.item.endsWith("table")}
+          <Table {item} category={params.category} />
+        {:else}
+          <Function {item} category={params.category} />
+        {/if}
+      {/key}
     {:else}
-      <p>Function</p>
+      <NotFound />
     {/if}
   {:else}
-    <NotFound />
+    <p>Loading ...</p>
   {/if}
-{:else}
-  <p>Loading ...</p>
-{/if}
-
-<style>
-  h1 {
-    color: #008cff;
-    text-transform: uppercase;
-    font-size: 4em;
-    font-weight: 100;
-  }
-</style>
+{/key}

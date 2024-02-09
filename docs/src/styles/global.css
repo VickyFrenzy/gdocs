@@ -23,7 +23,7 @@ body {
   font-size: 1.6rem;
   font-weight: normal;
   letter-spacing: 0.05rem;
-  color: var(--text-background_high);
+  color: var(--text-background-high);
   background: var(--colors-background_0);
 }
 

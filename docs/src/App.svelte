@@ -64,7 +64,7 @@
     overflow-y: scroll;
   }
 
-  div.content > * {
+  div.content > :global(*) {
     min-height: 100%;
   }
 </style>
