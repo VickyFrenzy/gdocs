@@ -23,9 +23,6 @@ builder/node_modules
 builder/.pnp
 builder/.pnp.js
 
-# VS Code
-.vscode
-
 # Testing
 builder/coverage
 
