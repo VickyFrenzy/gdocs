@@ -1,15 +1,15 @@
-import SelectorTag from "./SelectorTag";
+import SelectorTag from "./SelectorTag.ts";
 
 export default class BooleanTag extends SelectorTag {
-	constructor(name: string) {
-		super(name, ["true", "false"]);
-	}
+  constructor(name: string) {
+    super(name, ["true", "false"]);
+  }
 
-	process(string: string): string[] {
-		if (string === `@${this.name}`) {
-			return ["true"];
-		}
+  process(string: string): string[] {
+    if (string === `@${this.name}`) {
+      return ["true"];
+    }
 
-		return super.process(string);
-	}
+    return super.process(string);
+  }
 }

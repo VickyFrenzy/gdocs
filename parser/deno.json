@@ -1,0 +1,11 @@
+{
+  "name": "parser",
+  "version": "1.0.0",
+  "author": "Rui Maciel <ruigouveiamaciel@gmail.com>",
+  "license": "MIT",
+  "tasks": {
+    "start": "deno run --allow-read --allow-write --watch src/main.ts",
+    "parse": "deno run --allow-read --allow-write src/main.ts",
+    "example": "deno run --allow-read --allow-write src/main.ts -d ./examples --config ./config.json"
+  }
+}
