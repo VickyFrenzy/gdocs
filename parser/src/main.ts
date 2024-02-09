@@ -38,7 +38,7 @@ if (config.length > 1) {
 } else if (config.length === 1) {
   const decoder = new TextDecoder("utf-8");
   const configContent = Deno.readFileSync(
-    join(import.meta.url, "..", config[0]),
+    join(Deno.cwd(), config[0]),
   );
   const configJSON = JSON.parse(decoder.decode(configContent));
 
