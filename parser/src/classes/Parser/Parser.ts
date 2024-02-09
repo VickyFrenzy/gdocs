@@ -113,16 +113,14 @@ export default class Parser {
   }
 
   private parse_directory(directory: string) {
-    const dir_info = Deno.readDirSync(directory); // , { withFileTypes: true }
-    const subdirectories = Array.from(dir_info)
+    const dir_info = [...Deno.readDirSync(directory)]; // , { withFileTypes: true }
+    const subdirectories = dir_info
       .filter((d) => d.isDirectory)
       .map((d) => d.name);
-    const files = Array.from(dir_info)
-      .filter((d) => {
-        return (
-          d.isFile && extname(d.name).toLowerCase() == ".lua"
-        );
-      })
+    const files = dir_info
+      .filter((d) => (
+        d.isFile && extname(d.name).toLowerCase() == ".lua"
+      ))
       .map((d) => d.name);
 
     files.forEach((file) => {
