@@ -9,15 +9,16 @@ If you want to see examples of docummentation blocks you can check them [here](h
 ## Table of Contents
 
 <!--ts-->
-   * [Description](#gdocs---a-garrys-mod-lua-documentation-tool)
-   * [Table of contents](#table-of-contents)
-   * [Requirements](#requirements)
-   * [Example](#example)
-   * [Parse Your Own Project](#parse-your-own-project)
-   * [Tags Syntax](#tags-syntax)
-   * [Documentation Blocks](#documentation-blocks)
-   * [Global Tags](#global-tags)
-   * [Available Tags](#available-tags)
+
+- [Description](#gdocs---a-garrys-mod-lua-documentation-tool)
+- [Table of contents](#table-of-contents)
+- [Requirements](#requirements)
+- [Example](#example)
+- [Parse Your Own Project](#parse-your-own-project)
+- [Tags Syntax](#tags-syntax)
+- [Documentation Blocks](#documentation-blocks)
+- [Global Tags](#global-tags)
+- [Available Tags](#available-tags)
 <!--te-->
 
 ## Requirements
@@ -28,16 +29,19 @@ If you want to see examples of docummentation blocks you can check them [here](h
 ## Installation
 
 1. Install the yarn package manager if you don't have it already.
+
    ```
    $ npm install yarn -g
    ```
 
 2. Clone the repository.
+
    ```
    $ git clone https://github.com/ruigouveiamaciel/gdocs.git
    ```
 
 3. Install the dependencies.
+
    ```
    $ cd gdocs
    $ yarn install
@@ -48,9 +52,11 @@ If you want to see examples of docummentation blocks you can check them [here](h
 ## Example
 
 If you want to run the example on your computer simply run the following command in the root directory of the repository.
+
 ```
 $ yarn example
 ```
+
 This will automatically parse all example files and start the React development server.
 
 ## Parse Your Own Project
@@ -58,6 +64,7 @@ This will automatically parse all example files and start the React development 
 To parse your own project please follow the steps bellow. Its recommended to create a batch or bash file to automate this process.
 
 1. Set your working directory in the parser directory.
+
    ```
    $ cd parser
    ```
@@ -65,11 +72,13 @@ To parse your own project please follow the steps bellow. Its recommended to cre
 2. Parse your project using the command bellow, you can add as many directories as you want and paths must be relative to the parser directory.
 
    If any errors occur during this process, read them and fix them.
+
    ```
-   $ yarn parse -d "./examples" -d "../path/to/your/project"
+   $ deno task parse -d "./examples" -d "../path/to/your/project"
    ```
 
 3. Build the frontend.
+
    ```
    $ cd ../builder
    $ yarn build
@@ -89,6 +98,7 @@ In gdocs tags follow the following syntax.
 #### Example
 
 The following tag expects 3 arguments.
+
 ```lua
 -- @tagName argument1 argument2 argument3
 -- @tagName argument1 "This is the argument 2" This is the argument 3. The last argument doesn't require quotes to have more than one word.
@@ -165,35 +175,35 @@ end
 
 ## Available Tags
 
-| Tag  | Allowed as global | Description |
-| ------------- | ------------- | ------------- |
-| `@global` | no | Sets the current block as a global block. |
-| `@name <name>` | no | The name of the element that we're documenting, could be a function, table, hook, etc. Has to exist on every block except in global blocks. This tag is usually auto generated from code or previous tags. |
-| `@category <category name>` | yes | Specifies the category this block belongs to, if no tag is provided, defaults to the default category. |
-| `@subcategory <subcategory name>` | yes | Specifies the subcategory this block belongs to, does nothing if the provided category doesn't have subcategories. |
-| `@realm <client or shared or server>` | yes | Specifies the realm of this block. Options are: `client`, `server` and `shared`. |
-| `@example <example>` | no | An example. The text provided will be processed using markup. |
-| `@field <type> <key> <description>` | no | Used to specify panel attributes, table elements, enums, structs, etc. |
-| `@tparam <type> <name> <description>` | no | Defines a function parameter. Types can be divided with the following syntax: `type1|type2|type3` |
-| `@treturn <type>` | no | Defines a function return. Types can be divided the same way as `@tparam`. |
-| `@internal` | no | Sets a function as internal. Internal functions can be used anywhere but really shouldn't be used. |
-| `@ignore` | no | This is a special tag, ignores the current block, can go anywhere in the block, even in the middle of the text. For examples check [here](https://github.com/ruigouveiamaciel/gdocs/blob/master/parser/examples/ignored/ignored.lua). |
+| Tag                                   | Allowed as global | Description                                                                                                                                                                                                                           |
+| ------------------------------------- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- | ------ |
+| `@global`                             | no                | Sets the current block as a global block.                                                                                                                                                                                             |
+| `@name <name>`                        | no                | The name of the element that we're documenting, could be a function, table, hook, etc. Has to exist on every block except in global blocks. This tag is usually auto generated from code or previous tags.                            |
+| `@category <category name>`           | yes               | Specifies the category this block belongs to, if no tag is provided, defaults to the default category.                                                                                                                                |
+| `@subcategory <subcategory name>`     | yes               | Specifies the subcategory this block belongs to, does nothing if the provided category doesn't have subcategories.                                                                                                                    |
+| `@realm <client or shared or server>` | yes               | Specifies the realm of this block. Options are: `client`, `server` and `shared`.                                                                                                                                                      |
+| `@example <example>`                  | no                | An example. The text provided will be processed using markup.                                                                                                                                                                         |
+| `@field <type> <key> <description>`   | no                | Used to specify panel attributes, table elements, enums, structs, etc.                                                                                                                                                                |
+| `@tparam <type> <name> <description>` | no                | Defines a function parameter. Types can be divided with the following syntax: `type1                                                                                                                                                  | type2 | type3` |
+| `@treturn <type>`                     | no                | Defines a function return. Types can be divided the same way as `@tparam`.                                                                                                                                                            |
+| `@internal`                           | no                | Sets a function as internal. Internal functions can be used anywhere but really shouldn't be used.                                                                                                                                    |
+| `@ignore`                             | no                | This is a special tag, ignores the current block, can go anywhere in the block, even in the middle of the text. For examples check [here](https://github.com/ruigouveiamaciel/gdocs/blob/master/parser/examples/ignored/ignored.lua). |
 
 Alias tags deconstruct into normal tags. They're a way to write cleaner blocks.
 
-| Alias Tag  | Same as | Description |
-| ------------- | ------------- | ------------- |
-| `@clientside` | `@realm client` | Sets the realm to clientside. |
-| `@serverside` | `@realm server` | Sets the realm to serverside. |
-| `@shared` | `@realm shared` | Sets the realm to shared. |
-| `@constructor` | `@category global` | Sets the current block as a class contructor. |
-| `@globals` | `@global`, `@category globals` | All the function below this block will go under the Globals category.  |
-| `@class <class name>` | `@global`, `@category classes`, `@subcategory <class name>` | Defines a class. All function definitions bellow will be considered methods except if they have the `@constructor` tag. |
-| `@library <library name>` | `@global`, `@category libraries`, `@subcategory <library name>` | Defines a library. All function definitions bellow will be consired part of the library. |
-| `@hookcat <hook category name>` | `@global`, `@category hooks`, `@subcategory <hook category name>` | Defines a hook category. All function definitions below this block will be considered hooks. |
-| `@hook <hook category name> <hook name>` | `@category hooks`, `@subcategory <hook category name>`, `@name <hook name>` | Defines a single hook. You can define hook parameters just like functions. |
-| `@panel <panel name>` | `@global`, `@category panels`, `@subcategory <panel name>`, `@realm client` | Defines a class. All functions bellow this block will be considered a method. |
-| `@enum <enum name>` | `@category enums`, `@name <enum name>` | Defines an enum. `@field` tags should be added to this block. |
-| `@struct <struct name>` | `@category structs`, `@name <struct name>` | Defines a struct. `@field` tags should be added to this block. |
+| Alias Tag                                | Same as                                                                     | Description                                                                                                             |
+| ---------------------------------------- | --------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `@clientside`                            | `@realm client`                                                             | Sets the realm to clientside.                                                                                           |
+| `@serverside`                            | `@realm server`                                                             | Sets the realm to serverside.                                                                                           |
+| `@shared`                                | `@realm shared`                                                             | Sets the realm to shared.                                                                                               |
+| `@constructor`                           | `@category global`                                                          | Sets the current block as a class contructor.                                                                           |
+| `@globals`                               | `@global`, `@category globals`                                              | All the function below this block will go under the Globals category.                                                   |
+| `@class <class name>`                    | `@global`, `@category classes`, `@subcategory <class name>`                 | Defines a class. All function definitions bellow will be considered methods except if they have the `@constructor` tag. |
+| `@library <library name>`                | `@global`, `@category libraries`, `@subcategory <library name>`             | Defines a library. All function definitions bellow will be consired part of the library.                                |
+| `@hookcat <hook category name>`          | `@global`, `@category hooks`, `@subcategory <hook category name>`           | Defines a hook category. All function definitions below this block will be considered hooks.                            |
+| `@hook <hook category name> <hook name>` | `@category hooks`, `@subcategory <hook category name>`, `@name <hook name>` | Defines a single hook. You can define hook parameters just like functions.                                              |
+| `@panel <panel name>`                    | `@global`, `@category panels`, `@subcategory <panel name>`, `@realm client` | Defines a class. All functions bellow this block will be considered a method.                                           |
+| `@enum <enum name>`                      | `@category enums`, `@name <enum name>`                                      | Defines an enum. `@field` tags should be added to this block.                                                           |
+| `@struct <struct name>`                  | `@category structs`, `@name <struct name>`                                  | Defines a struct. `@field` tags should be added to this block.                                                          |
 
 For examples of how to use this tags, please check the [examples folder](https://github.com/ruigouveiamaciel/gdocs/tree/master/parser/examples).

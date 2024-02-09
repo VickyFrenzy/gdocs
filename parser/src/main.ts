@@ -1,6 +1,6 @@
 import { join } from "https://deno.land/std@0.215.0/path/mod.ts";
 import CategoryProject from "./classes/Project/CategoryProject.ts";
-import parseArgs from "https://deno.land/x/deno_minimist@v1.0.2/mod.ts";
+import { parseArgs } from "https://deno.land/std@0.215.0/cli/parse_args.ts";
 import Category from "./classes/Project/Category.ts";
 
 /**************************************************************** */
