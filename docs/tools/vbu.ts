@@ -55,6 +55,8 @@ const start = async ({
     }
   }
 
+  console.log(`Using options:  template=${template}`);
+
   await build({
     configFile: config,
     plugins: [
@@ -86,7 +88,7 @@ const start = async ({
 
     const data = encoder.encode(content);
 
-    await Deno.writeFileStr(outFile, data);
+    await Deno.writeFile(outFile, data);
   }
   console.log(`\nGenerated at ${outFile}`);
 };
@@ -114,7 +116,7 @@ const {
 } = args;
 
 if (help || h) {
-  console.log("Usage: vite-bundle-visualizer [options]");
+  console.log("Usage: deno run -A tools/vbu.ts [options]");
   // Print out usage guide
   Deno.exit(0);
 }

@@ -18,8 +18,8 @@ marked.use(
   markedHighlight({
     langPrefix: "prism language-",
     highlight: (code: any, lang: any) => {
-      if (Prism.languages[lang]) {
-        return Prism.highlight(code, Prism.languages[lang], lang);
+      if (lang === "lua") {
+        return Prism.highlight(code, Prism.languages["lua"], lang);
       } else {
         return code;
       }

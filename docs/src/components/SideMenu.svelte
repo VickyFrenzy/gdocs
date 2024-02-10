@@ -5,9 +5,13 @@
   import { location, link } from "svelte-spa-router";
   import SubCategory from "./SubCategory.svelte";
   import clear_label from "../utils/clearLabel";
+  import SearchPane from "./SearchPane.svelte";
 
   let tabs: [string, Category][] = [];
   let loaded = false;
+
+  let visible: boolean = false;
+  let searchText: string = "";
 
   let project: ProjectStructure = {};
 
@@ -44,7 +48,37 @@
   onDestroy(() => {
     unSub();
   });
+
+  // Quick search keypress
+
+  let shiftPressed = false;
+  let lastShiftTime = 0;
+
+  const handleKeys = (event) => {
+    if (visible) {
+      if (event.key === "Escape") {
+        visible = false;
+      }
+
+      return;
+    }
+
+    if (event.key === "Shift") {
+      const currentTime = Date.now();
+      if (shiftPressed && currentTime - lastShiftTime < 2000) {
+        visible = true;
+
+        shiftPressed = false;
+        lastShiftTime = 0;
+      } else {
+        shiftPressed = true;
+        lastShiftTime = currentTime;
+      }
+    }
+  };
 </script>
+
+<svelte:window on:keydown={handleKeys} />
 
 <div class="container">
   <div class="tabs-container">
@@ -121,6 +155,23 @@
         </button>
       {/if}
     {/each}
+    <button
+      class="tab tab-search"
+      on:click={() => {
+        visible = !visible;
+        console.log(project);
+      }}
+    >
+      <div>
+        <svg viewBox="0 0 24 24" role="presentation"
+          ><path
+            fill="currentColor"
+            d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5l-1.5 1.5l-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16A6.5 6.5 0 0 1 3 9.5A6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14S14 12 14 9.5S12 5 9.5 5"
+          /></svg
+        >
+        <span>Search</span>
+      </div>
+    </button>
   </div>
   <div class="menu-container" class:active={menuOpen}>
     {#key project}
@@ -164,6 +215,9 @@
     {/key}
     <!-- TODO -->
   </div>
+  {#if visible}
+    <SearchPane {project} bind:visible bind:searchText />
+  {/if}
 </div>
 
 <style>
@@ -180,6 +234,8 @@
   }
 
   .tabs-container {
+    display: flex;
+    flex-direction: column;
     width: 6.4rem;
     background: var(--sideMenu-background);
     color: var(--sideMenu-text);
@@ -200,6 +256,10 @@
     color: inherit;
     font-family: inherit;
     font-size: inherit;
+  }
+
+  .tab-search {
+    margin-top: auto;
   }
 
   .tab.active {
