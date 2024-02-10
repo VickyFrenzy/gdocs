@@ -7,19 +7,21 @@
     "dev": "vite --port 5050",
     "build": "vite build",
     "preview": "vite preview --port 5050",
-    "check": "svelte-check --tsconfig ./tsconfig.json"
+    "check": "svelte-check --tsconfig ./tsconfig.json",
+    "bundle-info": "deno run --allow-read --allow-ffi --allow-env --allow-run --allow-write=. tools/vbu.ts"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^3.0.0",
     "@tsconfig/svelte": "^5.0.2",
+    "marked": "^12.0.0",
+    "marked-highlight": "^2.1.1",
+    "prismjs": "^1.29.0",
     "svelte": "^4.2.3",
     "svelte-check": "^3.6.0",
     "tslib": "^2.6.2",
     "typescript": "^5.2.2",
     "vite": "^5.0.0",
-    "marked": "^12.0.0",
-    "prismjs": "^1.29.0",
-    "marked-highlight": "^2.1.1"
+    "highlight.js": "^11.9.0"
   },
   "dependencies": {
     "svelte-spa-router": "^4.0.0"

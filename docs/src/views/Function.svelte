@@ -164,7 +164,7 @@
     display: inline-flex;
     padding: 1.6rem;
     color: var(--codeBlocks-color);
-    font-family: "Roboto Mono", monospace;
+    font-family: var(--code);
     font-size: 1.6rem;
     font-weight: 400;
     line-height: 1.8rem;

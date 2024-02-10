@@ -1,5 +1,9 @@
 :root {
   font-size: 62.5%;
+  --roboto: Inter, Roboto, "Helvetica Neue", "Arial Nova", "Nimbus Sans", Arial,
+    sans-serif;
+  --code: ui-monospace, "JetBrains Mono", "Cascadia Code", "Source Code Pro",
+    Menlo, Consolas, "DejaVu Sans Mono", monospace;
 }
 
 * {
@@ -19,7 +23,7 @@ body,
 }
 
 body {
-  font-family: "Roboto", sans-serif;
+  font-family: var(--roboto);
   font-size: 1.6rem;
   font-weight: normal;
   letter-spacing: 0.05rem;

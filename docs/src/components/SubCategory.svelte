@@ -74,7 +74,7 @@
   }
 
   span {
-    font-family: Roboto;
+    font-family: var(--roboto);
     font-weight: 700;
     font-size: 14px;
     line-height: 24px;

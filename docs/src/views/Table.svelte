@@ -13,9 +13,6 @@
   let description = item.description || "";
   const fields = item.fields ?? [];
   const realm = item.realm;
-  onMount(() => {
-    console.log(item);
-  });
 </script>
 
 <Page title={category}>

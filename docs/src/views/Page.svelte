@@ -33,7 +33,7 @@
   }
 
   h4.title {
-    font-family: Roboto;
+    font-family: var(--roboto);
     font-weight: 500;
     font-size: 3.4rem;
     letter-spacing: 0.025rem;
@@ -47,7 +47,7 @@
 
   .container :global(.section) {
     /* h5 */
-    font-family: Roboto;
+    font-family: var(--roboto);
     font-weight: 500;
     font-size: 2.4rem;
     letter-spacing: 0;
@@ -75,7 +75,7 @@
   .container :global(.section-container pre[class*="language-"]) {
     color: var(--codeBlocks-color);
     text-shadow: none;
-    font-family: "Roboto Mono", monospace;
+    font-family: var(--code);
     font-size: 1.6rem;
     font-weight: 400;
     line-height: 1.8rem;

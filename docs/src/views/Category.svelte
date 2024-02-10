@@ -12,9 +12,6 @@
 
   let description = item.description || "";
   const fields = item.fields ?? [];
-  onMount(() => {
-    console.log(item);
-  });
 </script>
 
 <Page title={category}>
