@@ -58,7 +58,6 @@ jobs:
             console.log({ owner, repo, sha });
 
             const tag = "pre-" + sha;
-            const releaseBody = "Release for " + tag;
 
             // Read and process CHANGELOG.md
             let releaseName = tag;
@@ -84,10 +83,10 @@ jobs:
             const release = await github.repos.createRelease({
               owner, repo,
               tag_name: tag,
-              name: tag,
-              draft: true,
+              name: releaseName,
+              draft: false,
               target_commitish: sha,
-              body: releaseBody,
+              body: releaseContent,
               prerelease: true,
               make_latest: "true"
             });
