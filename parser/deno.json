@@ -7,6 +7,7 @@
     "start": "deno run --allow-read --allow-write --watch src/main.ts",
     "parse": "deno run --allow-read --allow-write src/main.ts",
     "example": "deno run --allow-read --allow-write src/main.ts -d ./examples --config ./config.json",
+    "bundle": "deno run --allow-read --allow-write --allow-env --allow-net --allow-run tools/bundle.ts",
     "release": "deno compile -o build/parser --allow-read --allow-write src/main.ts",
     "release:all": "deno task release:win32 && deno task release:linux:x86 && deno task release:apple:x86 && deno task release:apple:m1",
     "release:win32": "deno compile --target x86_64-pc-windows-msvc -o build/parser.exe --allow-read --allow-write src/main.ts",
