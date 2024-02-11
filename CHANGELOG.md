@@ -19,3 +19,9 @@
 **⚠️ Breaking changes**
 
 - Changed default output path to the current working directory. You can get the old behaviour by using `-o ../builder/src/parsed.json`
+
+## Version pre-0.3
+
+- Add binary tests on the CI. (hopefuly) no more bugs on the linux binary !
+- Bugfix on the `-d` argument
+- Bugfix on the `--help` argument

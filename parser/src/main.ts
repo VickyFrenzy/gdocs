@@ -21,7 +21,7 @@ const icons: {
 const project = new CategoryProject();
 const args = parseArgs(Deno.args); // parseArgs(process.argv.slice(2));
 
-if (args.h) {
+if (args.h || args.help) {
   console.log(
     `Usage: parse [-h] [-o OUTPUT_PATH] [-d DIRECTORY] [-config CONFIG_FILE]
 
@@ -40,7 +40,7 @@ Options:
   Deno.exit(0);
 }
 
-const _d = args.c ? args.c : args.directory ? args.directory : null;
+const _d = args.d ? args.d : args.directory ? args.directory : null;
 const directories: string[] = typeof _d === "string"
   ? [_d]
   : _d instanceof Array

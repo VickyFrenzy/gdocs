@@ -37,6 +37,9 @@ jobs:
           mkdir -p release
           cp -r parser/build/* release/
 
+      - name: Run binary tests
+        run: bash tests/test_binary.sh
+
       - name: Build docs with Deno
         working-directory: ./docs
         run: deno task build
@@ -65,7 +68,7 @@ jobs:
 
             try {
               const changelogContent = await fs.readFile('CHANGELOG.md', 'utf-8');
-              const changelogBlocks = changelogContent.split('## ');
+              const changelogBlocks = changelogContent.split('\n## ');
 
               // Get the latest block (assuming it's the first one after splitting)
               const latestBlock = changelogBlocks[changelogBlocks.length - 1];
