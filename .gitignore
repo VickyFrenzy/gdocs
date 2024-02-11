@@ -39,3 +39,5 @@ builder/src/parsed.json
 # build deno files
 *.exe
 *.bin
+
+docs/dist/
