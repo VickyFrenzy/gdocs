@@ -57,11 +57,39 @@ jobs:
             const { repo: { owner, repo }, sha } = context;
             console.log({ owner, repo, sha });
 
+            const tag = "pre-" + sha;
+            const releaseBody = "Release for " + tag;
+
+            // Read and process CHANGELOG.md
+            let releaseName = tag;
+            let releaseContent = 'No release notes available.';
+
+            try {
+              const changelogContent = await fs.readFile('CHANGELOG.md', 'utf-8');
+              const changelogBlocks = changelogContent.split('## ');
+
+              // Get the latest block (assuming it's the first one after splitting)
+              const latestBlock = changelogBlocks[changelogBlocks.length - 1];
+
+              // Split the latest block into title and content
+              const [latestTitle, ...latestContent] = latestBlock.split('\n');
+
+              // Construct release name and body
+              releaseName = latestTitle.trim() || tag;
+              releaseContent = latestContent.join('\n').trim() || 'No release notes available.';
+            } catch (error) {
+              console.error('Error reading or processing changelog:', error);
+            }
+
             const release = await github.repos.createRelease({
               owner, repo,
-              tag_name: process.env.GITHUB_REF,
+              tag_name: tag,
+              name: tag,
               draft: true,
-              target_commitish: sha
+              target_commitish: sha,
+              body: releaseBody,
+              prerelease: true,
+              make_latest: true
             });
 
             console.log('created release', { release });

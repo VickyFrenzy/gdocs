@@ -20,16 +20,35 @@ const icons: {
 } = {};
 const project = new CategoryProject();
 const args = parseArgs(Deno.args); // parseArgs(process.argv.slice(2));
-const directories: string[] = typeof args.d === "string"
-  ? [args.d]
-  : args.d instanceof Array
-  ? args.d
+
+if (args.h) {
+  console.log(
+    `Usage: parse [-h] [-o OUTPUT_PATH] [-d DIRECTORY] [-config CONFIG_FILE]
+
+Options:
+  -h, --help
+                        Show this help message and exit.
+  -o OUTPUT_PATH, --output OUTPUT_PATH
+                        Set the output path. Default is current working directory.
+  -f FILENAME, --filename FILENAME
+                        Set the filename. Default is 'parsed.json'.
+  -d DIRECTORY, --directory DIRECTORY
+                        Specify the directory to parse.
+  -c CONFIG_FILE, --config CONFIG_FILE
+                        Specify the configuration file to use.`,
+  );
+  Deno.exit(0);
+}
+
+const _d = args.c ? args.c : args.directory ? args.directory : null;
+const directories: string[] = typeof _d === "string"
+  ? [_d]
+  : _d instanceof Array
+  ? _d
   : [];
-const config = typeof args.config === "string"
-  ? [args.config]
-  : args.config instanceof Array
-  ? args.config
-  : [];
+
+const _c = args.c ? args.c : args.config ? args.config : null;
+const config = typeof _c === "string" ? [_c] : _c instanceof Array ? _c : [];
 
 if (config.length > 1) {
   throw new Error(
@@ -84,7 +103,13 @@ const data = encoder.encode(JSON.stringify(
   4,
 ));
 
+const filename = args.f
+  ? args.f
+  : args.filename
+  ? args.filename
+  : "parsed.json";
+const outputPath = args.o ? args.o : args.output ? args.output : Deno.cwd();
 Deno.writeFileSync(
-  join(Deno.cwd(), "..", "builder", "src", "parsed.json"),
+  join(outputPath, filename),
   data,
 );
