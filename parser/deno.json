@@ -6,6 +6,11 @@
   "tasks": {
     "start": "deno run --allow-read --allow-write --watch src/main.ts",
     "parse": "deno run --allow-read --allow-write src/main.ts",
-    "example": "deno run --allow-read --allow-write src/main.ts -d ./examples --config ./config.json"
+    "example": "deno run --allow-read --allow-write src/main.ts -d ./examples --config ./config.json",
+    "release": "deno compile --allow-read --allow-net src/main.ts --out parser.bin",
+    "release:win32": "deno compile --target x86_64-pc-windows-msvc -o parser.exe --allow-read --allow-net src/main.ts",
+    "release:linux:x86": "deno compile --target x86_64-unknown-linux-gnu -o parser.bin --allow-read --allow-net src/main.ts",
+    "release:apple:x86": "deno compile --target x86_64-apple-darwin -o parser-a86.bin --allow-read --allow-net src/main.ts",
+    "release:apple:m1": "deno compile --target aarch64-apple-darwin -o parser-m1.bin --allow-read --allow-net src/main.ts"
   }
 }

@@ -35,3 +35,7 @@ parser/.env*
 
 # Parsed
 builder/src/parsed.json
+
+# build deno files
+*.exe
+*.bin
