@@ -89,7 +89,7 @@ jobs:
               target_commitish: sha,
               body: releaseBody,
               prerelease: true,
-              make_latest: true
+              make_latest: "true"
             });
 
             console.log('created release', { release });
