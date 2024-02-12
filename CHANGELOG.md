@@ -54,6 +54,6 @@
 - Link to the up-to-date demo
 - Update Readme to have examples on setup and usage
 
-## Version 0.1 Your cool stuff
+## Version pre-0.6
 
-test
+- Fix release code and Changelog
