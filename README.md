@@ -12,7 +12,7 @@
     ·
     <a href="https://github.com/VictorienXP/gdocs/issues">Report Bug</a>
     ·
-    <a href="https://github.com/VictorienXP/gdocs/projects)">Planned Feature</a>
+    <a href="https://github.com/VictorienXP/gdocs/projects">Planned Feature</a>
   </p>
 </div>
 
