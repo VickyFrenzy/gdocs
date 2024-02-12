@@ -40,3 +40,9 @@
   - Forcefully sort internal docs to the bottom (#6)
   - UI issues with lots of long entries. (#7)
   - Class view enhancements (#8)
+
+## Version pre-0.5
+
+- Bugfix the globals not working
+- Better error page, and the home page is now centered !
+- Test for badges
