@@ -1,5 +1,4 @@
 import Home from "./routes/Home.svelte";
-import Lorem from "./routes/Lorem.svelte";
 import NotFound from "./routes/NotFound.svelte";
 import RouteController from "./routes/RouteController.svelte";
 
@@ -7,7 +6,6 @@ export type Routes = Record<string, any>;
 
 export default {
   "/": Home,
-  "/lorem/:repeat": Lorem,
   "/:tab/:category/:subcategory?": RouteController,
   // The catch-all route must always be last
   "*": NotFound,

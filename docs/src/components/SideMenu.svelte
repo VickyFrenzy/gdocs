@@ -41,9 +41,8 @@
   };
 
   onMount(() => {
-    menuOpen = window.innerWidth > 1000;
-
     urlTab = $location.split("/")[1] ?? "";
+    menuOpen = window.innerWidth > 1000 && urlTab !== "";
   });
 
   onDestroy(() => {
@@ -329,9 +328,9 @@
     max-width: var(--container-width);
   }
 
-  .menu-container > * {
+  /* .menu-container > * {
     width: var(--container-width);
-  }
+  } */
 
   .menu-container > a:first-child {
     display: inline-block;

@@ -1,0 +1,15 @@
+{
+  "title": "GDocs Documentation",
+  "tabs": [
+    {
+      "name": "Modules",
+      "tag_name": "module",
+      "icon": "mdiViewModule"
+    },
+    {
+      "name": "Plugins",
+      "tag_name": "plugin",
+      "icon": "mdiPowerPlug"
+    }
+  ]
+}

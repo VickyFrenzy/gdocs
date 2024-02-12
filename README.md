@@ -1,14 +1,16 @@
-# gdocs - A Garry's Mod Lua Documentation Tool
+<h1 align="center">
+  <img src="docs/public/logo.svg" width="240px" alt="gDocs" aria-label="gDocs"/><br/>
+</h1>
+<p align="center">
+<h2>gDocs - A Garry's Mod Lua Documentation Tool</h2><br/></p>
 
-> **Warning**: Most of this doc is deprecated and being reworked. Please refer to the [parser doc](parser) for usage.
+> This is a fork `ruigouveiamaciel/gdocs`, available [here](https://ruigouveiamaciel.github.io/gdocs/#/).
 
-Documentation generator for Garry's Mod addons.
+![gDocs-screen.png](assets/gDocs-screen.png)
 
-> You can have a look at the older version [here](https://ruigouveiamaciel.github.io/gdocs/#/).
+If you want to see examples of docummentation blocks you can check them [here](parser/examples).
 
-If you want to see examples of docummentation blocks you can check them [here](https://github.com/ruigouveiamaciel/gdocs/tree/master/parser/examples).
-
-**Notice!** This project is still not finished, there's a lot of missing features and existing features might change in the future. Feel free to contribute with ideas and code.
+> **Notice!** This project in complete rework and existing features might change in the future. Feel free to contribute with ideas and code.
 
 ---
 
@@ -162,7 +164,7 @@ function addition(a, b)
 end
 ```
 
-For more examples check the [examples folder](https://github.com/ruigouveiamaciel/gdocs/tree/master/parser/examples).
+For more examples check the [examples folder](parser/examples).
 
 ## Global Tags
 
@@ -195,19 +197,21 @@ end
 
 ## Available Tags
 
-| Tag                                   | Allowed as global | Description                                                                                                                                                                                                                           |
-| ------------------------------------- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `@global`                             | no                | Sets the current block as a global block.                                                                                                                                                                                             |
-| `@name <name>`                        | no                | The name of the element that we're documenting, could be a function, table, hook, etc. Has to exist on every block except in global blocks. This tag is usually auto generated from code or previous tags.                            |
-| `@category <category name>`           | yes               | Specifies the category this block belongs to, if no tag is provided, defaults to the default category.                                                                                                                                |
-| `@subcategory <subcategory name>`     | yes               | Specifies the subcategory this block belongs to, does nothing if the provided category doesn't have subcategories.                                                                                                                    |
-| `@realm <client or shared or server>` | yes               | Specifies the realm of this block. Options are: `client`, `server` and `shared`.                                                                                                                                                      |
-| `@example <example>`                  | no                | An example. The text provided will be processed using markup.                                                                                                                                                                         |
-| `@field <type> <key> <description>`   | no                | Used to specify panel attributes, table elements, enums, structs, etc.                                                                                                                                                                |
-| `@tparam <type> <name> <description>` | no                | Defines a function parameter. Types can be divided with the following syntax: `type1\|type2\|type3`                                                                                                                                   |
-| `@treturn <type>`                     | no                | Defines a function return. Types can be divided the same way as `@tparam`.                                                                                                                                                            |
-| `@internal`                           | no                | Sets a function as internal. Internal functions can be used anywhere but really shouldn't be used.                                                                                                                                    |
-| `@ignore`                             | no                | This is a special tag, ignores the current block, can go anywhere in the block, even in the middle of the text. For examples check [here](https://github.com/ruigouveiamaciel/gdocs/blob/master/parser/examples/ignored/ignored.lua). |
+| Tag                                   | Allowed as global | Description                                                                                                                                                                                                |
+| ------------------------------------- | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `@global`                             | no                | Sets the current block as a global block.                                                                                                                                                                  |
+| `@name <name>`                        | no                | The name of the element that we're documenting, could be a function, table, hook, etc. Has to exist on every block except in global blocks. This tag is usually auto generated from code or previous tags. |
+| `@category <category name>`           | yes               | Specifies the category this block belongs to, if no tag is provided, defaults to the default category.                                                                                                     |
+| `@subcategory <subcategory name>`     | yes               | Specifies the subcategory this block belongs to, does nothing if the provided category doesn't have subcategories.                                                                                         |
+| `@realm <client or shared or server>` | yes               | Specifies the realm of this block. Options are: `client`, `server` and `shared`.                                                                                                                           |
+| `@example <example>`                  | no                | An example. The text provided will be processed using markup.                                                                                                                                              |
+| `@field <type> <key> <description>`   | no                | Used to specify panel attributes, table elements, enums, structs, etc.                                                                                                                                     |
+| `@tparam <type> <name> <description>` | no                | Defines a function parameter. Types can be divided with the following syntax: `type1\|type2\|type3`                                                                                                        |
+| `@treturn <type>`                     | no                | Defines a function return. Types can be divided the same way as `@tparam`.                                                                                                                                 |
+| `@internal`                           | no                | Sets a function as internal. Internal functions can be used anywhere but really shouldn't be used.                                                                                                         |
+| `@stub`                               | no                | Marks a function as a stub, indicating that it's not yet fully implemented.                                                                                                                                |
+| `@deprecated`                         | no                | Marks a function as deprecated, indicating that it's no longer recommended for use and may be removed in future versions.                                                                                  |
+| `@ignore`                             | no                | This is a special tag, ignores the current block, can go anywhere in the block, even in the middle of the text. For examples check [here](parser/examples/ignored/ignored.lua).                            |
 
 Alias tags deconstruct into normal tags. They're a way to write cleaner blocks.
 
@@ -226,4 +230,4 @@ Alias tags deconstruct into normal tags. They're a way to write cleaner blocks.
 | `@enum <enum name>`                      | `@category enums`, `@name <enum name>`                                      | Defines an enum. `@field` tags should be added to this block.                                                           |
 | `@struct <struct name>`                  | `@category structs`, `@name <struct name>`                                  | Defines a struct. `@field` tags should be added to this block.                                                          |
 
-For examples of how to use this tags, please check the [examples folder](https://github.com/ruigouveiamaciel/gdocs/tree/master/parser/examples).
+For examples of how to use this tags, please check the [examples folder](parser/examples).

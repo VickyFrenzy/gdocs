@@ -64,7 +64,7 @@
         <Router {routes} />
       </div>
     {:else}
-      <h1>Loading...</h1>
+      <!-- Loading -->
     {/if}
   </div>
 </main>

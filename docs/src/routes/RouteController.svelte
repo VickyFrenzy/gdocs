@@ -75,6 +75,6 @@
       <NotFound />
     {/if}
   {:else}
-    <p>Loading ...</p>
+    <!-- Loading -->
   {/if}
 {/key}
