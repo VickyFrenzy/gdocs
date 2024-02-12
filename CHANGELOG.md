@@ -46,3 +46,14 @@
 - Bugfix the globals not working
 - Better error page, and the home page is now centered !
 - Test for badges
+
+## Version 0.1
+
+- Fix GH Pages routing
+- Fix Readme broken link
+- Link to the up-to-date demo
+- Update Readme to have examples on setup and usage
+
+## Version 0.1 Your cool stuff
+
+test

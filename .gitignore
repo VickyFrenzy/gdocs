@@ -41,3 +41,5 @@ builder/src/parsed.json
 *.bin
 
 docs/dist/
+
+rel.js

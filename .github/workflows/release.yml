@@ -83,6 +83,8 @@ jobs:
             console.log({ owner, repo, sha });
 
             const tag = "pre-" + sha;
+            let isPre = true;
+            let version = tag;
 
             // Read and process CHANGELOG.md
             let releaseName = tag;
@@ -97,9 +99,19 @@ jobs:
 
               // Split the latest block into title and content
               const [latestTitle, ...latestContent] = latestBlock.split('\n');
+              const match = latestTitle.match(/(v.|v|version) (\S+)\s*(.*)/i);
 
               // Construct release name and body
-              releaseName = latestTitle.trim() || tag;
+              if (match && match[1]) {
+                version = match[2];
+                releaseName =
+                  match[3] ||
+                  (version ? `Version ${version}` : latestTitle.trim() || tag);
+                isPre = false;
+              } else {
+                releaseName = latestTitle.trim() || tag;
+              }
+
               releaseContent = latestContent.join('\n').trim() || 'No release notes available.';
             } catch (error) {
               console.error('Error reading or processing changelog:', error);
@@ -107,12 +119,12 @@ jobs:
 
             const release = await github.repos.createRelease({
               owner, repo,
-              tag_name: tag,
+              tag_name: version,
               name: releaseName,
               draft: false,
               target_commitish: sha,
               body: releaseContent,
-              prerelease: true,
+              prerelease: isPre,
               make_latest: "true"
             });
 
@@ -130,27 +142,3 @@ jobs:
                 data: await fs.readFile(`./release/${file}`)
               });            
             }
-
-      # - name: Create Release
-      #   id: create_release
-      #   uses: actions/create-release@v1
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # provided by Actions, no need to create
-      #   with:
-      #     tag_name: ${{ github.ref }}
-      #     release_name: Release ${{ github.ref }}
-      #     body: Release of version ${{ github.ref }}. # TODO: generate from CHANGELOG.md file ?
-      #     draft: false
-      #     prerelease: false
-
-      # - name: Upload Release Asset
-      #   id: upload-release-asset
-      #   uses: actions/upload-release-asset@v1
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   with:
-      #     upload_url: ${{ steps.create_release.outputs.upload_url }} #  more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-      #     asset_path: ./release
-      #     asset_name: parser*
-      #     asset_content_type: application/zip
-      #     asset_content_type: application/octet-stream

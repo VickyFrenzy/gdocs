@@ -1,112 +1,146 @@
-<h1 align="center">
-  <img src="docs/public/logo.svg" width="240px" alt="gDocs" aria-label="gDocs"/><br/>
-</h1>
-<p align="center">
-<h2>gDocs - A Garry's Mod Lua Documentation Tool</h2><br/></p>
+<a name="readme-top"></a>
+
+<div align="center">
+  <img src="docs/public/logo.svg" width="240px" height="240px" alt="gDocs" aria-label="gDocs"/><br/>
+   
+   
+  <p align="center">
+   <h2 align="center">gDocs</h2>
+   <h3 align="center">A Garry's Mod Lua Documentation Tool<h3>
+    <br />
+    <a href="https://victorienxp.github.io/gdocs">View Live Demo</a>
+    ·
+    <a href="issues">Report Bug</a>
+    ·
+    <a href="projects">Planned Feature</a>
+  </p>
+</div>
 
 > This is a fork `ruigouveiamaciel/gdocs`, available [here](https://ruigouveiamaciel.github.io/gdocs/#/).
 
+---
+
+## About gDocs
+
 ![gDocs-screen.png](assets/gDocs-screen.png)
+
+gDocs is a versatile documentation generator for Garry's Mod Lua projects. It streamlines code comprehension with concise interface that supports common features such as:
+
+- arguments listing
+- detailed function descriptions
+- badge indicators for status (deprecated, internal, stub)
+- syntax-highlighted examples
+- search functionality
+- seamless type linking
+
+It is battery-included, featuring a parser tool and pre-compiled web UI, requiring no external tools or Docker images.
 
 If you want to see examples of docummentation blocks you can check them [here](parser/examples).
 
 > **Notice!** This project in complete rework and existing features might change in the future. Feel free to contribute with ideas and code.
 
----
+<p align="right">(<a href="#readme-top">top</a>)</p>
 
-The frontend (`builder`) is now deprecated and being sunsetted by the new `docs` Svelte rewrite with new features.
-No need to build from source anymore, just get the latest release `docs.zip` and upload it to your GH pages alongside with your generated `parsed.json`.
+## Getting Started
 
-To generarte the `parsed.json`, use the binary release of the parser and use it like this `parser -d path/to/examples -o path/to/docs/zip`
+To get started with **gDocs**, download the parser for your architecture from the [releases page](releases).
 
-> **TODO**: Once the first stable release hit, make this better and clearer.
+Next, unzip the web UI zip file into your webpage root directory.
 
-<details>
-  <summary>Older doc (not reliable anymore)</summary>
+To generate the database, run the parser tool with the command:
 
-## Table of Contents
-
-<!--ts-->
-
-- [Description](#gdocs---a-garrys-mod-lua-documentation-tool)
-- [Table of contents](#table-of-contents)
-- [Requirements](#requirements)
-- [Example](#example)
-- [Parse Your Own Project](#parse-your-own-project)
-- [Tags Syntax](#tags-syntax)
-- [Documentation Blocks](#documentation-blocks)
-- [Global Tags](#global-tags)
-- [Available Tags](#available-tags)
-<!--te-->
-
-## Requirements
-
-- [Node.js](https://nodejs.org/) v12 or higher.
-- Yarn package manager.
-
-## Installation
-
-1. Install the yarn package manager if you don't have it already.
-
-   ```
-   $ npm install yarn -g
-   ```
-
-2. Clone the repository.
-
-   ```
-   $ git clone https://github.com/ruigouveiamaciel/gdocs.git
-   ```
-
-3. Install the dependencies.
-
-   ```
-   $ cd gdocs
-   $ yarn install
-   ```
-
-4. Done!
-
-## Example
-
-If you want to run the example on your computer simply run the following command in the root directory of the repository.
-
-```
-$ yarn example
+```bash
+parser.exe -d path_to_gmod_project -o path_to_webpage_root
 ```
 
-This will automatically parse all example files and start the React development server.
+Once the database (`parsed.json`) is generated and placed on the docs root, your documentation is ready to deploy to GitHub Pages or any other hosting provider.
 
-## Parse Your Own Project
+> Alternatively, if you have [Deno](https://deno.com/) installed, you can opt to use the JavaScript version.
 
-To parse your own project please follow the steps bellow. Its recommended to create a batch or bash file to automate this process.
+<p align="right">(<a href="#readme-top">top</a>)</p>
 
-1. Set your working directory in the parser directory.
+## CI Usage
 
-   ```
-   $ cd parser
-   ```
+The easiest way to get it run on your local machine or anywhere is really to pull the latest parser and run it locally :
 
-2. Parse your project using the command bellow, you can add as many directories as you want and paths must be relative to the parser directory.
+```bash
+wget https://github.com/VictorienXP/gdocs/releases/download/1.0/docs.zip
+wget https://github.com/VictorienXP/gdocs/releases/download/1.0/parser_x86_64-unknown-linux-gnu
 
-   If any errors occur during this process, read them and fix them.
+unzip -o docs.zip -d docs
+chmod +x parser_x86_64-unknown-linux-gnu
 
-   ```
-   $ deno task parse -d "./examples" -d "../path/to/your/project"
-   ```
+./parser_x86_64-unknown-linux-gnu -d src -o docs
 
-3. Build the frontend.
+# Now you can upload the "docs" to your webserver
+# You also can test locally using your favorite webserver. I personally recommands deno file_server for fast testing :
+# deno run --allow-net --allow-read="docs" -A -r -q https://deno.land/std/http/file_server.ts --cors --port=8000 docs
 
-   ```
-   $ cd ../builder
-   $ yarn build
-   ```
+```
 
-4. Done! Your project will be available in the build folder inside the builder directory.
+> Read more about the parser usage [here](parser#usage).
 
-</details>
+If you CI forces you into Docker usage, you can use the [deno_docker](https://github.com/denoland/deno_docker) base image or the GitHub action's `denoland/setup-deno` :
 
----
+```yaml
+jobs:
+   build-and-deploy:
+      runs-on: ubuntu-latest
+      env:
+         GDOCS_VERSION: 1.0
+      steps:
+         - uses: actions/checkout@v3
+
+         - name: Setup deno
+         uses: denoland/setup-deno@v1
+         with:
+            deno-version: v1.x
+
+         - name: Download gDocs files
+            run: |
+               wget https://github.com/VictorienXP/gdocs/releases/download/${{ env.GDOCS_VERSION }}/docs.zip
+               wget https://github.com/VictorienXP/gdocs/releases/download/${{ env.GDOCS_VERSION }}/parser.min.js
+
+         - name: Extract docs
+            run: unzip -o docs.zip -d docs
+
+         - name: Generate database
+            run: deno run -A parser.min.js -d src -o docs
+
+         - name: Deploy gh-pages
+            uses: peaceiris/actions-gh-pages@v3
+            with:
+               github_token: ${{ secrets.GITHUB_TOKEN }}
+               publish_dir: ./docs
+
+```
+
+For GitLab Pages you can also use the Deno's docker image :
+
+```yaml
+generate_docs:
+  stage: generate_docs
+  image: denoland/deno:1.40.4
+  script:
+    - wget https://github.com/VictorienXP/gdocs/releases/download/1.0/docs.zip
+    - wget https://github.com/VictorienXP/gdocs/releases/download/1.0/parser.min.js
+    - unzip -o docs.zip -d docs
+    - deno run -A parser.min.js -d src -o docs
+
+deploy:
+  stage: deploy
+  script:
+    - mv docs public
+  artifacts:
+    paths:
+      - public
+  only:
+    - main
+  dependencies:
+    - generate_docs
+```
+
+<p align="right">(<a href="#readme-top">top</a>)</p>
 
 ## Tags Syntax
 
