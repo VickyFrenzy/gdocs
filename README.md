@@ -1,10 +1,26 @@
 # gdocs - A Garry's Mod Lua Documentation Tool
 
-Documentation generator for Garry's Mod addons. You can have a look at the example [here](https://ruigouveiamaciel.github.io/gdocs/#/).
+> **Warning**: Most of this doc is deprecated and being reworked. Please refer to the [parser doc](parser) for usage.
+
+Documentation generator for Garry's Mod addons.
+
+> You can have a look at the older version [here](https://ruigouveiamaciel.github.io/gdocs/#/).
 
 If you want to see examples of docummentation blocks you can check them [here](https://github.com/ruigouveiamaciel/gdocs/tree/master/parser/examples).
 
 **Notice!** This project is still not finished, there's a lot of missing features and existing features might change in the future. Feel free to contribute with ideas and code.
+
+---
+
+The frontend (`builder`) is now deprecated and being sunsetted by the new `docs` Svelte rewrite with new features.
+No need to build from source anymore, just get the latest release `docs.zip` and upload it to your GH pages alongside with your generated `parsed.json`.
+
+To generarte the `parsed.json`, use the binary release of the parser and use it like this `parser -d path/to/examples -o path/to/docs/zip`
+
+> **TODO**: Once the first stable release hit, make this better and clearer.
+
+<details>
+  <summary>Older doc (not reliable anymore)</summary>
 
 ## Table of Contents
 
@@ -85,6 +101,10 @@ To parse your own project please follow the steps bellow. Its recommended to cre
    ```
 
 4. Done! Your project will be available in the build folder inside the builder directory.
+
+</details>
+
+---
 
 ## Tags Syntax
 
@@ -184,7 +204,7 @@ end
 | `@realm <client or shared or server>` | yes               | Specifies the realm of this block. Options are: `client`, `server` and `shared`.                                                                                                                                                      |
 | `@example <example>`                  | no                | An example. The text provided will be processed using markup.                                                                                                                                                                         |
 | `@field <type> <key> <description>`   | no                | Used to specify panel attributes, table elements, enums, structs, etc.                                                                                                                                                                |
-| `@tparam <type> <name> <description>` | no                | Defines a function parameter. Types can be divided with the following syntax: `type1\|type2\|type3` |
+| `@tparam <type> <name> <description>` | no                | Defines a function parameter. Types can be divided with the following syntax: `type1\|type2\|type3`                                                                                                                                   |
 | `@treturn <type>`                     | no                | Defines a function return. Types can be divided the same way as `@tparam`.                                                                                                                                                            |
 | `@internal`                           | no                | Sets a function as internal. Internal functions can be used anywhere but really shouldn't be used.                                                                                                                                    |
 | `@ignore`                             | no                | This is a special tag, ignores the current block, can go anywhere in the block, even in the middle of the text. For examples check [here](https://github.com/ruigouveiamaciel/gdocs/blob/master/parser/examples/ignored/ignored.lua). |

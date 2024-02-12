@@ -25,3 +25,18 @@
 - Add binary tests on the CI. (hopefuly) no more bugs on the linux binary !
 - Bugfix on the `-d` argument
 - Bugfix on the `--help` argument
+
+## Version pre-0.4
+
+- Backport some forks features :
+
+  - `Add stub and deprecated tags` by @azzen
+  - `Larger side menu` by @azzen
+  - `Add a badge element` by @azzen
+
+- resolving old issues :
+  - Search functionality (#4)
+  - Better internal tag (#5)
+  - Forcefully sort internal docs to the bottom (#6)
+  - UI issues with lots of long entries. (#7)
+  - Class view enhancements (#8)

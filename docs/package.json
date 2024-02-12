@@ -21,7 +21,8 @@
     "tslib": "^2.6.2",
     "typescript": "^5.2.2",
     "vite": "^5.0.0",
-    "highlight.js": "^11.9.0"
+    "@types/marked": "^1.1.0",
+    "@types/prismjs": "^1.16.1"
   },
   "dependencies": {
     "svelte-spa-router": "^4.0.0"

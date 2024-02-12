@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import Router from "svelte-spa-router";
   import routes from "./routes";
   import { onMount, setContext } from "svelte";
@@ -9,6 +9,7 @@
 
   import "./styles/global.css";
   import "./styles/themes/dark.css";
+  import { BUNDLE_NAME } from "./constants";
   //   import "./styles/themes/light.css";
 
   let parsed = {};
@@ -17,24 +18,46 @@
     getData: () => get(parsedData),
   });
 
+  let tracedError: string | null = null;
+
   onMount(async () => {
-    parsed = await fetchParsedData();
+    try {
+      parsed = await fetchParsedData();
+    } catch (e: any) {
+      tracedError = `Can't fetch "${BUNDLE_NAME}" :\n ${
+        e.message ?? "Unknown error"
+      } `;
+      console.error(e);
+    }
     // routes = generateRoutes(data.structure);
     // console.log(routes);
   });
 </script>
 
 <svelte:head>
-  {#if $parsedData && $parsedData.title}
+  {#if tracedError}
+    <title>GDocs - Error</title>
+  {:else if $parsedData && $parsedData.title}
     <title>{$parsedData.title}</title>
   {:else}
     <title>Loading...</title>
   {/if}
+  <meta
+    name="theme-color"
+    media="(prefers-color-scheme: dark)"
+    content="#1c1c1e"
+  />
+  <meta name="color-scheme" content="light dark" />
 </svelte:head>
 
 <main>
   <div class="container">
-    {#if $parsedData && $parsedData.structure}
+    {#if tracedError}
+      <div class="error">
+        <h1>Loading Error</h1>
+        <code class="error-trace">{tracedError}</code>
+      </div>
+    {:else if $parsedData && $parsedData.structure}
       <SideMenu />
       <div class="content">
         <!-- #/plugins/MonoSuite.Administration/MonoSuite.Administration:RemoveIncognito -->
@@ -66,5 +89,21 @@
 
   div.content > :global(*) {
     min-height: 100%;
+  }
+
+  .error {
+    display: flex;
+    flex-direction: column;
+    place-content: center;
+  }
+
+  .error h1 {
+    color: #da5242;
+  }
+  .error .error-trace {
+    margin-top: 1rem;
+    padding: 0.5rem 0.75rem;
+    background-color: var(--colors-background_2);
+    max-width: 800px;
   }
 </style>

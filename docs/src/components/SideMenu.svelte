@@ -54,7 +54,13 @@
   let shiftPressed = false;
   let lastShiftTime = 0;
 
-  const handleKeys = (event) => {
+  let shiftPressLock = false;
+
+  const handleKeyUp = (event: KeyboardEvent) => {
+    shiftPressLock = false;
+  };
+
+  const handleKeys = (event: KeyboardEvent) => {
     if (visible) {
       if (event.key === "Escape") {
         visible = false;
@@ -62,6 +68,11 @@
 
       return;
     }
+
+    if (shiftPressLock) {
+      return;
+    }
+    shiftPressLock = true;
 
     if (event.key === "Shift") {
       const currentTime = Date.now();
@@ -76,9 +87,19 @@
       }
     }
   };
+
+  const shortForcefully = (a: string, b: string) => {
+    if (a.startsWith("_") && !b.startsWith("_")) {
+      return 1; // starting with "_" to the end
+    } else if (!a.startsWith("_") && b.startsWith("_")) {
+      return -1; // NOT starting with "_" to the beginning
+    } else {
+      return a.localeCompare(b); // Sort alphabetically otherwise
+    }
+  };
 </script>
 
-<svelte:window on:keydown={handleKeys} />
+<svelte:window on:keydown={handleKeys} on:keyup={handleKeyUp} />
 
 <div class="container">
   <div class="tabs-container">
@@ -176,22 +197,24 @@
   <div class="menu-container" class:active={menuOpen}>
     {#key project}
       {#if activeTab && project[activeTab]}
-        {#each Object.values(project[activeTab].subcategories).sort( (a, b) => a.name.localeCompare(b.name) ) as subcategory}
+        {#each Object.values(project[activeTab].subcategories).sort( (a, b) => shortForcefully(clear_label(a.name), clear_label(b.name)) ) as subcategory, i (i)}
           {@const key = `${activeTab}-${subcategory.name}`}
 
           {#if subcategory.item.startsWith("category") && "subcategories" in subcategory}
             {@const content = Object.values(subcategory.subcategories).sort(
-              (a, b) => a.name.localeCompare(b.name)
+              (a, b) =>
+                shortForcefully(clear_label(a.name), clear_label(b.name))
             )}
 
             <SubCategory
-              {key}
               href="/{activeTab}/{subcategory.name}"
               label={clear_label(subcategory.name)}
               count={content.length}
             >
-              {#each content as item}
+              {#each content as item, i (i)}
                 {@const href = `/${activeTab}/${subcategory.name}/${item.name}`}
+
+                {@const label = clear_label(item.name)}
                 <a
                   use:link
                   {href}
@@ -200,7 +223,27 @@
                   class:active={$location === href}
                 >
                   <div class="sub-container">
-                    <span>{clear_label(item.name)}</span>
+                    {#if label.length > 32}
+                      <abbr
+                        title={label}
+                        class="label"
+                        class:under={label.startsWith("_")}
+                        ><span>{label}</span></abbr
+                      >
+                    {:else}
+                      <span class="label" class:under={label.startsWith("_")}
+                        >{label}</span
+                      >
+                    {/if}
+                    {#if item?.stub}
+                      <abbr title="Stub" class="badge stub">S</abbr>
+                    {/if}
+                    {#if item?.internal}
+                      <abbr title="Internal Use" class="badge internal">I</abbr>
+                    {/if}
+                    {#if item?.deprecated}
+                      <abbr title="Deprecated" class="badge deprecated">D</abbr>
+                    {/if}
                   </div>
                 </a>
               {/each}
@@ -293,7 +336,8 @@
   }
 
   .menu-container {
-    width: 25.6rem;
+    --container-width: 35rem;
+    width: var(--container-width);
     max-width: 0;
     overflow-x: hidden;
     transition: max-width 250ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -303,11 +347,11 @@
   }
 
   .menu-container.active {
-    max-width: 25.6rem;
+    max-width: var(--container-width);
   }
 
   .menu-container > * {
-    width: 25.6rem;
+    width: var(--container-width);
   }
 
   .menu-container > a:first-child {
@@ -324,6 +368,7 @@
     display: flex;
     align-items: center;
     padding-left: 6.4rem;
+    padding-right: 0.6rem;
     color: var(--text-background-medium);
     cursor: pointer;
     transition:
@@ -337,13 +382,70 @@
     background: var(--text-background-hover);
   }
 
-  .subcategory span {
+  .subcategory .label {
+    display: flex;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1 1 auto;
+    padding-right: 0.5rem;
+
     font-family: var(--roboto);
     font-weight: 500;
     font-size: 14px;
     line-height: 24px;
     letter-spacing: 0.1px;
     user-select: none;
+  }
+
+  .subcategory .badge {
+    min-width: 1rem;
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 1.5rem;
+
+    display: inline-block;
+    padding: 0.05em 0.4em;
+    font-size: 75% !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+    text-align: center;
+    white-space: nowrap;
+    border-radius: 0.25rem;
+    color: #fff;
+    margin-left: 0.5rem;
+    background-color: #000;
+  }
+
+  .subcategory .badge.internal {
+    background-color: var(--badges-internal);
+  }
+  .subcategory .badge.stub {
+    background-color: var(--badges-stub);
+  }
+  .subcategory .badge.deprecated {
+    background-color: var(--badges-deprecated);
+  }
+
+  .sub-container {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    max-height: 3.2rem;
+  }
+
+  .sub-container abbr {
+    text-decoration: auto;
+  }
+
+  .sub-container abbr span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .sub-container .label.under {
+    color: var(--text-background-disabled);
   }
 
   @media (max-width: 1000px) {

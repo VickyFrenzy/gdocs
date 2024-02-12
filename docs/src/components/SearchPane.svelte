@@ -1,9 +1,14 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { clickOutside } from "../utils/clickOutside";
-  import type { Category, ProjectStructure } from "../utils/parsed";
+  import type {
+    Category,
+    ProjectStructure,
+    ValidSubcategory,
+  } from "../utils/parsed";
   import { link } from "svelte-spa-router";
   import { focusTrap } from "../utils/focusTrap";
+  import type { FormEventHandler } from "svelte/elements";
   export let visible: boolean = false;
   export let project: ProjectStructure;
   export let searchText: string = "";
@@ -12,9 +17,19 @@
 
   const doClose = () => (visible = false);
 
-  let results = [];
+  interface Result {
+    text: string;
+    score: number;
+    reference: {
+      item: string;
+      parentCategoryItem: string | null;
+      chain: string[];
+    };
+  }
 
-  function markTerm(searchTerm, text) {
+  let results: Result[] = [];
+
+  function markTerm(searchTerm: string, text: string) {
     const regex = new RegExp(`(${searchTerm})`, "gi");
     const segments = text.split(regex);
     const markedArray = segments.map((segment) => {
@@ -31,8 +46,8 @@
   function searchProjectStructure(
     project: ProjectStructure,
     searchText: string
-  ) {
-    const results = [];
+  ): Result[] {
+    const results: Result[] = [];
 
     function scoreMatch(match: string) {
       if (match === searchText) {
@@ -61,9 +76,9 @@
 
     // Helper function to search within a category or subcategory
     function searchCategory(
-      category: Category,
-      parentCategoryItem,
-      chain = []
+      category: ValidSubcategory,
+      parentCategoryItem: string | null,
+      chain: string[] = []
     ) {
       // Search in the 'name' key of the category or subcategory
       if (category.name.toLowerCase().includes(searchText.toLowerCase())) {
@@ -93,9 +108,16 @@
       }
 
       // Iterate over each subcategory within the category or subcategory
-      for (const subcategoryKey in category.subcategories) {
-        const subcategory = category.subcategories[subcategoryKey];
-        searchCategory(subcategory, category.name, [...chain, subcategoryKey]); // Recursively search within subcategories
+      if ((category as Category).subcategories) {
+        for (const subcategoryKey in (category as Category).subcategories) {
+          const subcategory = (category as Category).subcategories[
+            subcategoryKey
+          ];
+          searchCategory(subcategory, category.name, [
+            ...chain,
+            subcategoryKey,
+          ]); // Recursively search within subcategories
+        }
       }
     }
 
@@ -119,8 +141,8 @@
     }
   }
 
-  const doSearch = (e: KeyboardEvent) => {
-    const text = e.target.value;
+  const doSearch = (e: FormEventHandler<HTMLInputElement> | any) => {
+    const text = (e.target as HTMLInputElement).value;
 
     if (text !== "") {
       results = searchProjectStructure(project, text);
@@ -295,5 +317,11 @@
 
   .results-container :global(mark) {
     background-color: var(--arguments-background);
+  }
+
+  li {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 </style>

@@ -20,6 +20,9 @@ export default class FunctionPage {
   readonly realm?: string;
   readonly internal?: boolean;
 
+  readonly deprecated?: boolean;
+  readonly stub?: boolean;
+
   constructor(
     public readonly name: string,
     public readonly description?: string,
@@ -46,6 +49,10 @@ export default class FunctionPage {
     this.examples = examples.length > 0 ? examples : undefined;
     this.realm = get_unique(block, "realm");
     this.internal = get_unique(block, "internal") === "true" ? true : undefined;
+    this.deprecated = get_unique(block, "deprecated") === "true"
+      ? true
+      : undefined;
+    this.stub = get_unique(block, "stub") === "true" ? true : undefined;
 
     this.item = "function";
   }

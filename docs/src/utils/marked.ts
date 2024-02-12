@@ -9,9 +9,6 @@ marked.use({
   pedantic: false,
   gfm: true,
   breaks: false,
-  sanitize: false,
-  smartypants: false,
-  xhtml: false,
 });
 
 marked.use(
@@ -24,7 +21,7 @@ marked.use(
         return code;
       }
     },
-  })
+  }),
 );
 
 export default marked;

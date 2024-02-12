@@ -48,4 +48,8 @@
 
   --table-background: var(--colors-background_16);
   --table-alternative: var(--colors-background_8);
+
+  --badges-internal: #919191;
+  --badges-stub: #03a1fc;
+  --badges-deprecated: #fc6b03;
 }
