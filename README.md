@@ -43,7 +43,7 @@ If you want to see examples of docummentation blocks you can check them [here](p
 
 ## Getting Started
 
-To get started with **gDocs**, download the parser for your architecture from the [releases page](releases).
+To get started with **gDocs**, download the parser for your architecture from the [releases page](https://github.com/VictorienXP/gdocs/releases).
 
 Next, unzip the web UI zip file into your webpage root directory.
 
