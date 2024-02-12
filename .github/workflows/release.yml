@@ -48,6 +48,28 @@ jobs:
         working-directory: ./docs/dist
         run: zip -r ../../release/docs.zip *
 
+      - name: Clone repository
+        uses: actions/checkout@v2
+        with:
+          ref: "gh-pages"
+          path: "./gh-pages"
+
+      - name: Copy build content
+        run: |
+          cp -r ./docs/dist/* ./gh-pages
+          cp /tmp/parsed.json ./gh-pages
+
+      - name: Commit changes
+        working-directory: ./gh-pages
+        env:
+          COMMIT_MESSAGE: Update pages with latest frontend
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add -A
+          git diff --staged --quiet || git commit -m "$COMMIT_MESSAGE"
+          git push origin gh-pages
+
       - name: Create Release
         uses: actions/github-script@v2
         with:

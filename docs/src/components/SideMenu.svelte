@@ -6,6 +6,7 @@
   import SubCategory from "./SubCategory.svelte";
   import clear_label from "../utils/clearLabel";
   import SearchPane from "./SearchPane.svelte";
+  import ItemLink from "./ItemLink.svelte";
 
   let tabs: [string, Category][] = [];
   let loaded = false;
@@ -197,7 +198,7 @@
   <div class="menu-container" class:active={menuOpen}>
     {#key project}
       {#if activeTab && project[activeTab]}
-        {#each Object.values(project[activeTab].subcategories).sort( (a, b) => shortForcefully(clear_label(a.name), clear_label(b.name)) ) as subcategory, i (i)}
+        {#each Object.values(project[activeTab].subcategories).sort( (a, b) => shortForcefully(clear_label(a.name), clear_label(b.name)) ) as subcategory, i (`${activeTab}-${subcategory.name}`)}
           {@const key = `${activeTab}-${subcategory.name}`}
 
           {#if subcategory.item.startsWith("category") && "subcategories" in subcategory}
@@ -211,43 +212,21 @@
               label={clear_label(subcategory.name)}
               count={content.length}
             >
-              {#each content as item, i (i)}
-                {@const href = `/${activeTab}/${subcategory.name}/${item.name}`}
-
-                {@const label = clear_label(item.name)}
-                <a
-                  use:link
-                  {href}
-                  class="subcategory"
+              {#each content as item, i}
+                <ItemLink
+                  {item}
+                  parentLink={`/${activeTab}/${subcategory.name}`}
                   on:click={closeMenu}
-                  class:active={$location === href}
-                >
-                  <div class="sub-container">
-                    {#if label.length > 32}
-                      <abbr
-                        title={label}
-                        class="label"
-                        class:under={label.startsWith("_")}
-                        ><span>{label}</span></abbr
-                      >
-                    {:else}
-                      <span class="label" class:under={label.startsWith("_")}
-                        >{label}</span
-                      >
-                    {/if}
-                    {#if item?.stub}
-                      <abbr title="Stub" class="badge stub">S</abbr>
-                    {/if}
-                    {#if item?.internal}
-                      <abbr title="Internal Use" class="badge internal">I</abbr>
-                    {/if}
-                    {#if item?.deprecated}
-                      <abbr title="Deprecated" class="badge deprecated">D</abbr>
-                    {/if}
-                  </div>
-                </a>
+                />
               {/each}
             </SubCategory>
+          {:else}
+            <ItemLink
+              stacked={true}
+              item={subcategory}
+              parentLink={`/${activeTab}`}
+              on:click={closeMenu}
+            />
           {/if}
 
           <!-- <a use:link href="/{activeTab}/{subcategory.name}" class="subcategory"
@@ -361,91 +340,6 @@
 
   .menu-container > a > div {
     padding-left: 2rem;
-  }
-
-  .subcategory {
-    height: 3.2rem;
-    display: flex;
-    align-items: center;
-    padding-left: 6.4rem;
-    padding-right: 0.6rem;
-    color: var(--text-background-medium);
-    cursor: pointer;
-    transition:
-      background 250ms cubic-bezier(0.4, 0, 0.2, 1),
-      color 250ms cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  .subcategory.active {
-    color: var(--colors-main);
-  }
-  .subcategory:hover {
-    background: var(--text-background-hover);
-  }
-
-  .subcategory .label {
-    display: flex;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    flex: 1 1 auto;
-    padding-right: 0.5rem;
-
-    font-family: var(--roboto);
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 24px;
-    letter-spacing: 0.1px;
-    user-select: none;
-  }
-
-  .subcategory .badge {
-    min-width: 1rem;
-    flex-grow: 0;
-    flex-shrink: 0;
-    flex-basis: 1.5rem;
-
-    display: inline-block;
-    padding: 0.05em 0.4em;
-    font-size: 75% !important;
-    font-weight: 700 !important;
-    line-height: 1 !important;
-    text-align: center;
-    white-space: nowrap;
-    border-radius: 0.25rem;
-    color: #fff;
-    margin-left: 0.5rem;
-    background-color: #000;
-  }
-
-  .subcategory .badge.internal {
-    background-color: var(--badges-internal);
-  }
-  .subcategory .badge.stub {
-    background-color: var(--badges-stub);
-  }
-  .subcategory .badge.deprecated {
-    background-color: var(--badges-deprecated);
-  }
-
-  .sub-container {
-    display: flex;
-    align-items: center;
-    overflow: hidden;
-    max-height: 3.2rem;
-  }
-
-  .sub-container abbr {
-    text-decoration: auto;
-  }
-
-  .sub-container abbr span {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .sub-container .label.under {
-    color: var(--text-background-disabled);
   }
 
   @media (max-width: 1000px) {
