@@ -10,9 +10,9 @@
     <br />
     <a href="https://victorienxp.github.io/gdocs">View Live Demo</a>
     ·
-    <a href="issues">Report Bug</a>
+    <a href="https://github.com/VictorienXP/gdocs/issues">Report Bug</a>
     ·
-    <a href="projects">Planned Feature</a>
+    <a href="https://github.com/VictorienXP/gdocs/projects)">Planned Feature</a>
   </p>
 </div>
 
