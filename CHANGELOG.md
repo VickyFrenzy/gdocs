@@ -57,3 +57,7 @@
 ## Version pre-0.6
 
 - Fix release code and Changelog
+
+## Version 0.1.1
+
+- Bump to deno 1.41.0 to smaller binaries
