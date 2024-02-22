@@ -1112,6 +1112,34 @@
             "name": "Structs",
             "pageType": "table",
             "subcategories": {
+                "Color": {
+                    "name": "Color",
+                    "description": "Table created by the Color function and used in various situations.",
+                    "item": "table",
+                    "fields": [
+                        {
+                            "type": "number",
+                            "key": "r",
+                            "description": "The red channel."
+                        },
+                        {
+                            "type": "number",
+                            "key": "g",
+                            "description": "The red channel."
+                        },
+                        {
+                            "type": "number",
+                            "key": "b",
+                            "description": "The red channel."
+                        },
+                        {
+                            "type": "number",
+                            "key": "a",
+                            "description": "The alpha channel."
+                        }
+                    ],
+                    "realm": "client"
+                },
                 "AmmoData": {
                     "name": "AmmoData",
                     "description": "Table structure that describes a Source Engine ammo type.",
@@ -1169,34 +1197,6 @@
                         }
                     ],
                     "realm": "shared"
-                },
-                "Color": {
-                    "name": "Color",
-                    "description": "Table created by the Color function and used in various situations.",
-                    "item": "table",
-                    "fields": [
-                        {
-                            "type": "number",
-                            "key": "r",
-                            "description": "The red channel."
-                        },
-                        {
-                            "type": "number",
-                            "key": "g",
-                            "description": "The red channel."
-                        },
-                        {
-                            "type": "number",
-                            "key": "b",
-                            "description": "The red channel."
-                        },
-                        {
-                            "type": "number",
-                            "key": "a",
-                            "description": "The alpha channel."
-                        }
-                    ],
-                    "realm": "client"
                 }
             },
             "item": "category"
