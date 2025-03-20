@@ -29,18 +29,6 @@
                     "deprecated": true,
                     "stub": true
                 },
-                "Stack": {
-                    "name": "Stack",
-                    "description": "Returns a new Stack object",
-                    "item": "function",
-                    "returns": [
-                        {
-                            "type": "Stack",
-                            "description": "A brand new stack object."
-                        }
-                    ],
-                    "realm": "shared"
-                },
                 "sKore.PersistentData": {
                     "name": "sKore.PersistentData",
                     "description": "Creates a PersistentData using the given file.",
@@ -53,6 +41,18 @@
                         }
                     ],
                     "realm": "shared"
+                },
+                "Stack": {
+                    "name": "Stack",
+                    "description": "Returns a new Stack object",
+                    "item": "function",
+                    "returns": [
+                        {
+                            "type": "Stack",
+                            "description": "A brand new stack object."
+                        }
+                    ],
+                    "realm": "shared"
                 }
             },
             "item": "category"
@@ -61,6 +61,45 @@
             "name": "Classes",
             "pageType": "function",
             "subcategories": {
+                "PersistentData": {
+                    "name": "PersistentData",
+                    "pageType": "function",
+                    "subcategories": {
+                        "PersistentData:load": {
+                            "name": "PersistentData:load",
+                            "description": "Loads/reloads data from the data file.",
+                            "item": "function",
+                            "returns": [
+                                {
+                                    "type": "PersistentData",
+                                    "description": "Returns itself."
+                                }
+                            ],
+                            "realm": "shared"
+                        },
+                        "PersistentData:save": {
+                            "name": "PersistentData:save",
+                            "description": "Stores data in the data file.",
+                            "item": "function",
+                            "returns": [
+                                {
+                                    "type": "PersistentData",
+                                    "description": "Returns itself."
+                                }
+                            ],
+                            "realm": "shared"
+                        }
+                    },
+                    "description": "Used to store persistent data between different sessions and servers.",
+                    "fields": [
+                        {
+                            "type": "string",
+                            "key": "path",
+                            "description": "Path of the file the data is stored in."
+                        }
+                    ],
+                    "item": "category"
+                },
                 "Stack": {
                     "name": "Stack",
                     "pageType": "function",
@@ -117,45 +156,6 @@
                     },
                     "description": "An object returned by Stack().\n\nLike a Lua table, a Stack is a container. It follows the principle of LIFO\n(last in, first out).\n\nThe Stack works like a stack of papers: the first page you put down (push)\nwill be the last one you remove (pop). That also means that the last page you\nput down, will be the first to be removed.",
                     "item": "category"
-                },
-                "PersistentData": {
-                    "name": "PersistentData",
-                    "pageType": "function",
-                    "subcategories": {
-                        "PersistentData:load": {
-                            "name": "PersistentData:load",
-                            "description": "Loads/reloads data from the data file.",
-                            "item": "function",
-                            "returns": [
-                                {
-                                    "type": "PersistentData",
-                                    "description": "Returns itself."
-                                }
-                            ],
-                            "realm": "shared"
-                        },
-                        "PersistentData:save": {
-                            "name": "PersistentData:save",
-                            "description": "Stores data in the data file.",
-                            "item": "function",
-                            "returns": [
-                                {
-                                    "type": "PersistentData",
-                                    "description": "Returns itself."
-                                }
-                            ],
-                            "realm": "shared"
-                        }
-                    },
-                    "description": "Used to store persistent data between different sessions and servers.",
-                    "fields": [
-                        {
-                            "type": "string",
-                            "key": "path",
-                            "description": "Path of the file the data is stored in."
-                        }
-                    ],
-                    "item": "category"
                 }
             },
             "item": "category"
@@ -164,186 +164,6 @@
             "name": "Libraries",
             "pageType": "function",
             "subcategories": {
-                "achievements": {
-                    "name": "achievements",
-                    "pageType": "function",
-                    "subcategories": {
-                        "achievements.BalloonPopped": {
-                            "name": "achievements.BalloonPopped",
-                            "description": "Adds one to the count of balloons burst. Once this count reaches 1000,\nthe 'Popper' achievement is unlocked.",
-                            "item": "function",
-                            "realm": "client"
-                        },
-                        "achievements.Count": {
-                            "name": "achievements.Count",
-                            "description": "Returns the amount of achievements in Garry's Mod.",
-                            "item": "function",
-                            "returns": [
-                                {
-                                    "type": "number",
-                                    "description": "The amount of achievements available."
-                                }
-                            ],
-                            "realm": "client"
-                        },
-                        "achievements.EatBall": {
-                            "name": "achievements.EatBall",
-                            "description": "Adds one to the count of balls eaten. Once this count reaches 200,\nthe 'Ball Eater' achievement is unlocked.",
-                            "item": "function",
-                            "realm": "client"
-                        },
-                        "achievements.GetCount": {
-                            "name": "achievements.GetCount",
-                            "description": "Retrieves progress of given achievement.",
-                            "item": "function",
-                            "parameters": [
-                                {
-                                    "type": "number",
-                                    "name": "achievementID",
-                                    "description": "The ID of achievement to retrieve progress of. Note: IDs start from 0, not 1."
-                                }
-                            ],
-                            "returns": [
-                                {
-                                    "type": "number",
-                                    "description": "The achievement progress for the given achievementID. Note: Non-progress based achievements will have 0, even if they are completed."
-                                }
-                            ],
-                            "examples": [
-                                "Will print achievement progress for all of your achievements into\nconsole.\n```lua\nfor i = 0, achievements.Count() - 1 do\n    print( achievements.GetCount(i) )\nend\n```"
-                            ],
-                            "realm": "client"
-                        },
-                        "achievements.GetDesc": {
-                            "name": "achievements.GetDesc",
-                            "description": "Retrieves description of given achievement.",
-                            "item": "function",
-                            "parameters": [
-                                {
-                                    "type": "number",
-                                    "name": "achievementID",
-                                    "description": "The ID of achievement to retrieve progress of. Note: IDs start from 0, not 1."
-                                },
-                                {
-                                    "type": "string",
-                                    "name": "Description",
-                                    "description": "of an achievement."
-                                }
-                            ],
-                            "examples": [
-                                "Will print achievement descriptions for all of your achievements\ninto console.\n```lua\nfor i = 0, achievements.Count() - 1 do\n    print( achievements.GetDesc(i) )\nend\n```"
-                            ],
-                            "realm": "client"
-                        },
-                        "achievements.GetGoal": {
-                            "name": "achievements.GetGoal",
-                            "description": "Retrieves progress goal of given achievement.",
-                            "item": "function",
-                            "parameters": [
-                                {
-                                    "type": "number",
-                                    "name": "achievementID",
-                                    "description": "The ID of achievement to retrieve progress of. Note: IDs start from 0, not 1."
-                                }
-                            ],
-                            "returns": [
-                                {
-                                    "type": "number",
-                                    "description": "Progress goal of an achievement."
-                                }
-                            ],
-                            "realm": "client"
-                        },
-                        "achievements.GetName": {
-                            "name": "achievements.GetName",
-                            "description": "Retrieves name of given achievement.",
-                            "item": "function",
-                            "parameters": [
-                                {
-                                    "type": "number",
-                                    "name": "achievementID",
-                                    "description": "The ID of achievement to retrieve progress of. Note: IDs start from 0, not 1."
-                                }
-                            ],
-                            "returns": [
-                                {
-                                    "type": "string",
-                                    "description": "Name of an achievement."
-                                }
-                            ],
-                            "realm": "client"
-                        },
-                        "achievements.IncBaddies": {
-                            "name": "achievements.IncBaddies",
-                            "description": "Adds one to the count of baddies killed. Once this count reaches 1000,\nthe 'War Zone' achievement is unlocked.",
-                            "item": "function",
-                            "realm": "client"
-                        },
-                        "achievements.IncBystander": {
-                            "name": "achievements.IncBystander",
-                            "description": "Adds one to the count of innocent animals killed. Once this count reaches\n1000, the 'Innocent Bystander' achievement is unlocked.",
-                            "item": "function",
-                            "realm": "client"
-                        },
-                        "achievements.IncGoodies": {
-                            "name": "achievements.IncGoodies",
-                            "description": "Adds one to the count of friendly NPCs killed. Once this count reaches 1000,\nthe 'Bad Friend' achievement is unlocked.",
-                            "item": "function",
-                            "realm": "client"
-                        },
-                        "achievements.IsAchieved": {
-                            "name": "achievements.IsAchieved",
-                            "description": "Used in Garry's Mod 12 in the achievements menu to show the user if they have\nunlocked certain achievements.",
-                            "item": "function",
-                            "parameters": [
-                                {
-                                    "type": "number",
-                                    "name": "achievementID",
-                                    "description": "The ID of achievement to retrieve progress of. Note: IDs start from 0, not 1."
-                                }
-                            ],
-                            "returns": [
-                                {
-                                    "type": "boolean",
-                                    "description": "Returns true if the given achievementID is achieved."
-                                }
-                            ],
-                            "realm": "client"
-                        },
-                        "achievements.Remover": {
-                            "name": "achievements.Remover",
-                            "description": "Adds one to the count of things removed. Once this count reaches 5000,\nthe 'Destroyer' achievement is unlocked.",
-                            "item": "function",
-                            "realm": "client"
-                        },
-                        "achievements.SpawnedNPC": {
-                            "name": "achievements.SpawnedNPC",
-                            "description": "Adds one to the count of NPCs spawned. Once this count reaches 1000,\nthe 'Procreator' achievement is unlocked.",
-                            "item": "function",
-                            "realm": "client"
-                        },
-                        "achievements.SpawnedProp": {
-                            "name": "achievements.SpawnedProp",
-                            "description": "Adds one to the count of props spawned. Once this count reaches 5000,\nthe 'Creator' achievement is unlocked.",
-                            "item": "function",
-                            "realm": "client"
-                        },
-                        "achievements.SpawnedRagdoll": {
-                            "name": "achievements.SpawnedRagdoll",
-                            "description": "Adds one to the count of ragdolls spawned. Once this count reaches 2000,\nthe 'Dollhouse' achievement is unlocked.",
-                            "item": "function",
-                            "realm": "client"
-                        },
-                        "achievements.SpawnMenuOpen": {
-                            "name": "achievements.SpawnMenuOpen",
-                            "description": "Adds one to the count of how many times the spawnmenu has been opened.\nOnce this count reaches 100,000, the 'Menu User' achievement is unlocked.",
-                            "item": "function",
-                            "realm": "client"
-                        }
-                    },
-                    "description": "This library is used internally by Garry's Mod to help keep track of\nachievement progress and unlock the appropriate achievements once a certain\nnumber is reached.",
-                    "item": "category"
-                },
                 "cam": {
                     "name": "cam",
                     "pageType": "function",
@@ -568,6 +388,233 @@
                     "description": "This directs all drawing to be done to a certain 2D or 3D plane or position,\nuntil the corresponding \"End\" function is called.\nThe matrix functions exist, but are mostly unusable unless you're familiar\nwith the source engine's layout for each aspect.",
                     "item": "category"
                 },
+                "resource": {
+                    "name": "resource",
+                    "pageType": "function",
+                    "subcategories": {
+                        "resource.AddFile": {
+                            "name": "resource.AddFile",
+                            "description": "Adds the specified and all related files to the files the client should\ndownload.\n\nFor convenience, this function will automatically add any other files that\nare related to the selected one, and throw an error if it can't find them.\nFor example, a .vmt file will automatically add the .vtf with the same name,\nand a .mdl file will automatically add all .vvd, .ani, .dx80.vtx, .dx90.vtx,\n.sw.vtx, .phy and .jpg files with the same name, with a separate error for\neach missing file.\n\nIf you do not want it to do this, use resource.AddSingleFile.",
+                            "item": "function",
+                            "parameters": [
+                                {
+                                    "type": "string",
+                                    "name": "path",
+                                    "description": "Virtual path of the file to be added, relative to garrysmod/. Do not add .bz2 to the filepath. Do not put gamemodes/*gamemodename*/content/ or addons/<*addonname*/ into the path."
+                                }
+                            ],
+                            "realm": "server"
+                        },
+                        "resource.AddSingleFile": {
+                            "name": "resource.AddSingleFile",
+                            "description": "Adds the specified file to the files the client should download.\n\nIf you wish to add textures or models, consider using resource.AddFile to\nadd all the files required for a texture/model.",
+                            "item": "function",
+                            "parameters": [
+                                {
+                                    "type": "string",
+                                    "name": "path",
+                                    "description": "Path of the file to be added, relative to garrysmod/"
+                                }
+                            ],
+                            "realm": "server"
+                        },
+                        "resource.AddWorkshop": {
+                            "name": "resource.AddWorkshop",
+                            "description": "Adds a workshop addon for the client to download before entering the server.\n\nHaving the raw files from a workshop item does not count as having already\ndownloaded it.\nSo players who previously downloaded a map through Fast Download will have\nto re-download it if you use the workshop.\n\nYou should try to only add addons that have custom content ( models, sounds,\netc ).\n\nGamemodes that are workshop enabled are automatically added to this list -\nso there's no need to add them.\n\nThe server's current map is also automatically added, if it is loaded from a\nworkshop addon.",
+                            "item": "function",
+                            "parameters": [
+                                {
+                                    "type": "string",
+                                    "name": "workshopid",
+                                    "description": "The workshop id of the file. This cannot be a collection."
+                                }
+                            ],
+                            "realm": "server"
+                        }
+                    },
+                    "description": "The resource library is used to control what files are sent to clients who\njoin a server, this includes models, materials, sounds, text files but not\nLua files.",
+                    "item": "category"
+                },
+                "achievements": {
+                    "name": "achievements",
+                    "pageType": "function",
+                    "subcategories": {
+                        "achievements.BalloonPopped": {
+                            "name": "achievements.BalloonPopped",
+                            "description": "Adds one to the count of balloons burst. Once this count reaches 1000,\nthe 'Popper' achievement is unlocked.",
+                            "item": "function",
+                            "realm": "client"
+                        },
+                        "achievements.Count": {
+                            "name": "achievements.Count",
+                            "description": "Returns the amount of achievements in Garry's Mod.",
+                            "item": "function",
+                            "returns": [
+                                {
+                                    "type": "number",
+                                    "description": "The amount of achievements available."
+                                }
+                            ],
+                            "realm": "client"
+                        },
+                        "achievements.EatBall": {
+                            "name": "achievements.EatBall",
+                            "description": "Adds one to the count of balls eaten. Once this count reaches 200,\nthe 'Ball Eater' achievement is unlocked.",
+                            "item": "function",
+                            "realm": "client"
+                        },
+                        "achievements.GetCount": {
+                            "name": "achievements.GetCount",
+                            "description": "Retrieves progress of given achievement.",
+                            "item": "function",
+                            "parameters": [
+                                {
+                                    "type": "number",
+                                    "name": "achievementID",
+                                    "description": "The ID of achievement to retrieve progress of. Note: IDs start from 0, not 1."
+                                }
+                            ],
+                            "returns": [
+                                {
+                                    "type": "number",
+                                    "description": "The achievement progress for the given achievementID. Note: Non-progress based achievements will have 0, even if they are completed."
+                                }
+                            ],
+                            "examples": [
+                                "Will print achievement progress for all of your achievements into\nconsole.\n```lua\nfor i = 0, achievements.Count() - 1 do\n    print( achievements.GetCount(i) )\nend\n```"
+                            ],
+                            "realm": "client"
+                        },
+                        "achievements.GetDesc": {
+                            "name": "achievements.GetDesc",
+                            "description": "Retrieves description of given achievement.",
+                            "item": "function",
+                            "parameters": [
+                                {
+                                    "type": "number",
+                                    "name": "achievementID",
+                                    "description": "The ID of achievement to retrieve progress of. Note: IDs start from 0, not 1."
+                                },
+                                {
+                                    "type": "string",
+                                    "name": "Description",
+                                    "description": "of an achievement."
+                                }
+                            ],
+                            "examples": [
+                                "Will print achievement descriptions for all of your achievements\ninto console.\n```lua\nfor i = 0, achievements.Count() - 1 do\n    print( achievements.GetDesc(i) )\nend\n```"
+                            ],
+                            "realm": "client"
+                        },
+                        "achievements.GetGoal": {
+                            "name": "achievements.GetGoal",
+                            "description": "Retrieves progress goal of given achievement.",
+                            "item": "function",
+                            "parameters": [
+                                {
+                                    "type": "number",
+                                    "name": "achievementID",
+                                    "description": "The ID of achievement to retrieve progress of. Note: IDs start from 0, not 1."
+                                }
+                            ],
+                            "returns": [
+                                {
+                                    "type": "number",
+                                    "description": "Progress goal of an achievement."
+                                }
+                            ],
+                            "realm": "client"
+                        },
+                        "achievements.GetName": {
+                            "name": "achievements.GetName",
+                            "description": "Retrieves name of given achievement.",
+                            "item": "function",
+                            "parameters": [
+                                {
+                                    "type": "number",
+                                    "name": "achievementID",
+                                    "description": "The ID of achievement to retrieve progress of. Note: IDs start from 0, not 1."
+                                }
+                            ],
+                            "returns": [
+                                {
+                                    "type": "string",
+                                    "description": "Name of an achievement."
+                                }
+                            ],
+                            "realm": "client"
+                        },
+                        "achievements.IncBaddies": {
+                            "name": "achievements.IncBaddies",
+                            "description": "Adds one to the count of baddies killed. Once this count reaches 1000,\nthe 'War Zone' achievement is unlocked.",
+                            "item": "function",
+                            "realm": "client"
+                        },
+                        "achievements.IncBystander": {
+                            "name": "achievements.IncBystander",
+                            "description": "Adds one to the count of innocent animals killed. Once this count reaches\n1000, the 'Innocent Bystander' achievement is unlocked.",
+                            "item": "function",
+                            "realm": "client"
+                        },
+                        "achievements.IncGoodies": {
+                            "name": "achievements.IncGoodies",
+                            "description": "Adds one to the count of friendly NPCs killed. Once this count reaches 1000,\nthe 'Bad Friend' achievement is unlocked.",
+                            "item": "function",
+                            "realm": "client"
+                        },
+                        "achievements.IsAchieved": {
+                            "name": "achievements.IsAchieved",
+                            "description": "Used in Garry's Mod 12 in the achievements menu to show the user if they have\nunlocked certain achievements.",
+                            "item": "function",
+                            "parameters": [
+                                {
+                                    "type": "number",
+                                    "name": "achievementID",
+                                    "description": "The ID of achievement to retrieve progress of. Note: IDs start from 0, not 1."
+                                }
+                            ],
+                            "returns": [
+                                {
+                                    "type": "boolean",
+                                    "description": "Returns true if the given achievementID is achieved."
+                                }
+                            ],
+                            "realm": "client"
+                        },
+                        "achievements.Remover": {
+                            "name": "achievements.Remover",
+                            "description": "Adds one to the count of things removed. Once this count reaches 5000,\nthe 'Destroyer' achievement is unlocked.",
+                            "item": "function",
+                            "realm": "client"
+                        },
+                        "achievements.SpawnedNPC": {
+                            "name": "achievements.SpawnedNPC",
+                            "description": "Adds one to the count of NPCs spawned. Once this count reaches 1000,\nthe 'Procreator' achievement is unlocked.",
+                            "item": "function",
+                            "realm": "client"
+                        },
+                        "achievements.SpawnedProp": {
+                            "name": "achievements.SpawnedProp",
+                            "description": "Adds one to the count of props spawned. Once this count reaches 5000,\nthe 'Creator' achievement is unlocked.",
+                            "item": "function",
+                            "realm": "client"
+                        },
+                        "achievements.SpawnedRagdoll": {
+                            "name": "achievements.SpawnedRagdoll",
+                            "description": "Adds one to the count of ragdolls spawned. Once this count reaches 2000,\nthe 'Dollhouse' achievement is unlocked.",
+                            "item": "function",
+                            "realm": "client"
+                        },
+                        "achievements.SpawnMenuOpen": {
+                            "name": "achievements.SpawnMenuOpen",
+                            "description": "Adds one to the count of how many times the spawnmenu has been opened.\nOnce this count reaches 100,000, the 'Menu User' achievement is unlocked.",
+                            "item": "function",
+                            "realm": "client"
+                        }
+                    },
+                    "description": "This library is used internally by Garry's Mod to help keep track of\nachievement progress and unlock the appropriate achievements once a certain\nnumber is reached.",
+                    "item": "category"
+                },
                 "player": {
                     "name": "player",
                     "pageType": "function",
@@ -717,53 +764,6 @@
                         }
                     },
                     "description": "The player library is used to get the Lua objects that represent players\nin-game.",
-                    "item": "category"
-                },
-                "resource": {
-                    "name": "resource",
-                    "pageType": "function",
-                    "subcategories": {
-                        "resource.AddFile": {
-                            "name": "resource.AddFile",
-                            "description": "Adds the specified and all related files to the files the client should\ndownload.\n\nFor convenience, this function will automatically add any other files that\nare related to the selected one, and throw an error if it can't find them.\nFor example, a .vmt file will automatically add the .vtf with the same name,\nand a .mdl file will automatically add all .vvd, .ani, .dx80.vtx, .dx90.vtx,\n.sw.vtx, .phy and .jpg files with the same name, with a separate error for\neach missing file.\n\nIf you do not want it to do this, use resource.AddSingleFile.",
-                            "item": "function",
-                            "parameters": [
-                                {
-                                    "type": "string",
-                                    "name": "path",
-                                    "description": "Virtual path of the file to be added, relative to garrysmod/. Do not add .bz2 to the filepath. Do not put gamemodes/*gamemodename*/content/ or addons/<*addonname*/ into the path."
-                                }
-                            ],
-                            "realm": "server"
-                        },
-                        "resource.AddSingleFile": {
-                            "name": "resource.AddSingleFile",
-                            "description": "Adds the specified file to the files the client should download.\n\nIf you wish to add textures or models, consider using resource.AddFile to\nadd all the files required for a texture/model.",
-                            "item": "function",
-                            "parameters": [
-                                {
-                                    "type": "string",
-                                    "name": "path",
-                                    "description": "Path of the file to be added, relative to garrysmod/"
-                                }
-                            ],
-                            "realm": "server"
-                        },
-                        "resource.AddWorkshop": {
-                            "name": "resource.AddWorkshop",
-                            "description": "Adds a workshop addon for the client to download before entering the server.\n\nHaving the raw files from a workshop item does not count as having already\ndownloaded it.\nSo players who previously downloaded a map through Fast Download will have\nto re-download it if you use the workshop.\n\nYou should try to only add addons that have custom content ( models, sounds,\netc ).\n\nGamemodes that are workshop enabled are automatically added to this list -\nso there's no need to add them.\n\nThe server's current map is also automatically added, if it is loaded from a\nworkshop addon.",
-                            "item": "function",
-                            "parameters": [
-                                {
-                                    "type": "string",
-                                    "name": "workshopid",
-                                    "description": "The workshop id of the file. This cannot be a collection."
-                                }
-                            ],
-                            "realm": "server"
-                        }
-                    },
-                    "description": "The resource library is used to control what files are sent to clients who\njoin a server, this includes models, materials, sounds, text files but not\nLua files.",
                     "item": "category"
                 }
             },
@@ -945,39 +945,6 @@
             "name": "Panels",
             "pageType": "function",
             "subcategories": {
-                "MPanel": {
-                    "name": "MPanel",
-                    "pageType": "function",
-                    "subcategories": {
-                        "PANEL:GetBackgroundColor": {
-                            "name": "PANEL:GetBackgroundColor",
-                            "description": "Returns the background color. If this panels has a transparent background,\ninvoke this on the parent and return its value.\n\nIf no background color is found, the default color is returned.",
-                            "item": "function",
-                            "returns": [
-                                {
-                                    "type": "Color",
-                                    "description": "The background color."
-                                }
-                            ],
-                            "realm": "client"
-                        },
-                        "PANEL:SetBackgroundColor": {
-                            "name": "PANEL:SetBackgroundColor",
-                            "description": "Sets the background color.\n\nIf set to nil, then the panel is considered transparent.",
-                            "item": "function",
-                            "parameters": [
-                                {
-                                    "type": "Color|nil",
-                                    "name": "color",
-                                    "description": "The background color."
-                                }
-                            ],
-                            "realm": "client"
-                        }
-                    },
-                    "description": "Base panel for all elements.",
-                    "item": "category"
-                },
                 "DColorCombo": {
                     "name": "DColorCombo",
                     "pageType": "function",
@@ -1040,6 +1007,39 @@
                         }
                     },
                     "description": "The DColorCombo allows the user to choose color, without alpha, using\nDColorMixer or DColorPalette in a tabbed view.",
+                    "item": "category"
+                },
+                "MPanel": {
+                    "name": "MPanel",
+                    "pageType": "function",
+                    "subcategories": {
+                        "PANEL:GetBackgroundColor": {
+                            "name": "PANEL:GetBackgroundColor",
+                            "description": "Returns the background color. If this panels has a transparent background,\ninvoke this on the parent and return its value.\n\nIf no background color is found, the default color is returned.",
+                            "item": "function",
+                            "returns": [
+                                {
+                                    "type": "Color",
+                                    "description": "The background color."
+                                }
+                            ],
+                            "realm": "client"
+                        },
+                        "PANEL:SetBackgroundColor": {
+                            "name": "PANEL:SetBackgroundColor",
+                            "description": "Sets the background color.\n\nIf set to nil, then the panel is considered transparent.",
+                            "item": "function",
+                            "parameters": [
+                                {
+                                    "type": "Color|nil",
+                                    "name": "color",
+                                    "description": "The background color."
+                                }
+                            ],
+                            "realm": "client"
+                        }
+                    },
+                    "description": "Base panel for all elements.",
                     "item": "category"
                 }
             },
