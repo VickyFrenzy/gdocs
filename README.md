@@ -2,17 +2,17 @@
 
 <div align="center">
   <img src="docs/public/logo.svg" width="240px" height="240px" alt="gDocs" aria-label="gDocs"/><br/>
-   
-   
+
+
   <p align="center">
    <h2 align="center">gDocs</h2>
    <h3 align="center">A Garry's Mod Lua Documentation Tool<h3>
     <br />
-    <a href="https://victorienxp.github.io/gdocs">View Live Demo</a>
+    <a href="https://vickyfrenzy.github.io/gdocs">View Live Demo</a>
     ·
-    <a href="https://github.com/VictorienXP/gdocs/issues">Report Bug</a>
+    <a href="https://github.com/VickyFrenzy/gdocs/issues">Report Bug</a>
     ·
-    <a href="https://github.com/VictorienXP/gdocs/projects">Planned Feature</a>
+    <a href="https://github.com/VickyFrenzy/gdocs/projects">Planned Feature</a>
   </p>
 </div>
 
@@ -43,7 +43,7 @@ If you want to see examples of docummentation blocks you can check them [here](p
 
 ## Getting Started
 
-To get started with **gDocs**, download the parser for your architecture from the [releases page](https://github.com/VictorienXP/gdocs/releases).
+To get started with **gDocs**, download the parser for your architecture from the [releases page](https://github.com/VickyFrenzy/gdocs/releases).
 
 Next, unzip the web UI zip file into your webpage root directory.
 
@@ -64,8 +64,8 @@ Once the database (`parsed.json`) is generated and placed on the docs root, your
 The easiest way to get it run on your local machine or anywhere is really to pull the latest parser and run it locally :
 
 ```bash
-wget https://github.com/VictorienXP/gdocs/releases/download/1.0/docs.zip
-wget https://github.com/VictorienXP/gdocs/releases/download/1.0/parser_x86_64-unknown-linux-gnu
+wget https://github.com/VickyFrenzy/gdocs/releases/download/1.0/docs.zip
+wget https://github.com/VickyFrenzy/gdocs/releases/download/1.0/parser_x86_64-unknown-linux-gnu
 
 unzip -o docs.zip -d docs
 chmod +x parser_x86_64-unknown-linux-gnu
@@ -98,8 +98,8 @@ jobs:
 
          - name: Download gDocs files
             run: |
-               wget https://github.com/VictorienXP/gdocs/releases/download/${{ env.GDOCS_VERSION }}/docs.zip
-               wget https://github.com/VictorienXP/gdocs/releases/download/${{ env.GDOCS_VERSION }}/parser.min.js
+               wget https://github.com/VickyFrenzy/gdocs/releases/download/${{ env.GDOCS_VERSION }}/docs.zip
+               wget https://github.com/VickyFrenzy/gdocs/releases/download/${{ env.GDOCS_VERSION }}/parser.min.js
 
          - name: Extract docs
             run: unzip -o docs.zip -d docs
@@ -122,8 +122,8 @@ generate_docs:
   stage: generate_docs
   image: denoland/deno:1.40.4
   script:
-    - wget https://github.com/VictorienXP/gdocs/releases/download/1.0/docs.zip
-    - wget https://github.com/VictorienXP/gdocs/releases/download/1.0/parser.min.js
+    - wget https://github.com/VickyFrenzy/gdocs/releases/download/1.0/docs.zip
+    - wget https://github.com/VickyFrenzy/gdocs/releases/download/1.0/parser.min.js
     - unzip -o docs.zip -d docs
     - deno run -A parser.min.js -d src -o docs
 
